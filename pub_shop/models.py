@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from tinymce import HTMLField
 
 
@@ -35,11 +36,19 @@ class Product(AbstractShop):
     category = models.ForeignKey(Category, related_name='products', verbose_name='Категория', on_delete=models.CASCADE)
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2, verbose_name='Цена')
-    image = models.ImageField(upload_to='shop/categories', blank=True, null=True, verbose_name='Изображение')
+    image = models.ImageField(upload_to='shop/products', blank=True, null=True, verbose_name='Изображение')
     slug = models.SlugField(default='slug', verbose_name='Ссылка')
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('product-detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})
+
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+
+    image_tag.short_description = 'Картинка'
 
     class Meta:
         ordering = ['pk']

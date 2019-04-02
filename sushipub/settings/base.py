@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'solo',
     'tinymce',
     'rest_framework',
+    'django_filters',
     # Apps
     'pub_main.apps.PubMainConfig',
     'pub_shop.apps.PubShopConfig',
@@ -101,6 +102,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'frontend'),
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

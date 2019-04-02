@@ -18,3 +18,6 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
+    list_display = ('image_tag', 'name', 'category', 'price')
+    list_display_links = ('name',)
+    readonly_fields = ['image_tag']

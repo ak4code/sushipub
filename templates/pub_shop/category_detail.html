@@ -2,7 +2,7 @@
 
 {% block title %}{{ category.name }} - {{ block.super }}{% endblock %}
 
-{% block meta_description %}{{ page.content }}{% endblock %}
+{% block meta_description %}{{ category.meta_description }}{% endblock %}
 
 {% block content %}
     <article class="uk-container uk-container-large">

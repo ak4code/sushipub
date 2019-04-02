@@ -58,5 +58,5 @@ class Page(models.Model):
         return self.title
 
     class Meta:
-        verbose_name_plural = 'Страница'
-        verbose_name = 'Страницы'
+        verbose_name_plural = 'Страницы'
+        verbose_name = 'Страница'

@@ -1,13 +1,23 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from rest_framework import viewsets
 from .models import Category, Product
-from .serializers import CategorySerializer
+from .serializers import CategorySerializer, ProductSerializer
+from .paginations import ProductPagination
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = ProductPagination
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('category', 'price')
 
 
 class CategoryDetail(DetailView):
@@ -18,10 +28,11 @@ class CategoryDetail(DetailView):
     def get_object(self):
         return get_object_or_404(Category, slug__iexact=self.kwargs['slug'])
 
+
 class ProductDetail(DetailView):
     model = Product
     context_object_name = 'product'
     template_name = 'pub_shop/product_detail.html'
 
     def get_object(self):
-        return get_object_or_404(Product, slug__iexact=self.kwargs['slug'])
+        return get_object_or_404(Product, slug__iexact=self.kwargs['product_slug'])

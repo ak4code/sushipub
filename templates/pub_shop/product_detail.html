@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - {{ block.super }}{% endblock %}
+
+{% block meta_description %}{{ product.meta_description }}{% endblock %}
+
+{% block content %}
+    <article class="uk-container uk-container-large">
+        <h1>{{ product.name }}</h1>
+    </article>
+{% endblock %}

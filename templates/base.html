@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load webpack_loader %}
+{% load solo_tags %}
+{% load navigations %}
+{% get_solo 'pub_main.Shop' as shop %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="language" content="RU">
+    <title>{% block title %}{{ shop.name }} - ТЕМРЮК{% endblock %}</title>
+    <meta name="robots" content="index,follow"/>
+    <meta name="description" content="{% block meta_description %}{{ shop.meta_description }}{% endblock %}">
+    <meta name="keywords" content="Роллы, суши, пицца, гирос, доставка, Темрюк, заказ, Sushi Pub">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    {% get_files 'app' 'js' as app_js_files %}
+    {% get_files 'app' 'css' as app_css_files %}
+    {% for js_file in app_js_files %}
+        <link href="{{ js_file.url }}" rel="preload" as="script">
+    {% endfor %}
+    {% for css_file in app_css_files %}
+        <link href="{{ css_file.url }}" rel="preload" as="style">
+    {% endfor %}
+    {% render_bundle 'app' 'css' %}
+</head>
+<body>
+<div id="app">
+    <header class="pub-header">
+        <div class="uk-container uk-container-large">
+            <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" uk-navbar>
+                <div class="uk-navbar-left">
+                    <a href="/" title="{{ shop.name }}" class="uk-navbar-item uk-logo">
+                        <img uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}" alt="{{ shop.name }}">
+                    </a>
+                </div>
+                <div class="uk-navbar-center">
+                    <ul class="uk-navbar-nav">
+                        <li class="">
+                            <h4 class="uk-margin-remove">{{ shop.get_primary_phone }}</h4>
+                        </li>
+                    </ul>
+                </div>
+                <div class="uk-navbar-right">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-active"><a href="/">Меню</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <nav class="uk-navbar uk-navbar-container pub-category-nav" uk-navbar uk-sticky="animation: uk-animation-slide-top">
+        <div class="uk-navbar-center">
+            <ul class="pub-category-menu">
+                {% nav_horizontal_menu 'top-bar' %}
+            </ul>
+        </div>
+    </nav>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer></footer>
+</div>
+{% render_bundle 'app' 'js' %}
+</body>
+</html>

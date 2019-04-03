@@ -20,7 +20,7 @@ html, body {
 .pub-category-nav {
   background: white !important;
   border-bottom: 1px solid #ddd;
-  box-shadow: 0 4px 8px rgba(0,0,0,.1) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1) !important;
   .pub-category-menu {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -54,4 +54,25 @@ footer {
 
 .pub-logo-sticky {
   display: none;
+}
+
+.pub-product-card {
+  .pub-product-name {
+    font: 700 18px/21px "Roboto Slab", "Times New Roman", serif;
+  }
+  .pub-product-price {
+    font: 700 20px/36px 'Roboto Slab', 'Times New Roman', serif;
+  }
+}
+
+.pub-product-cat-link {
+  border: 1px solid #e21b22;
+  background: white;
+  color: #4a4a4a;
+  transition: all .3s ease-out;
+  &:hover {
+    background: #92c73d;
+    color: white;
+    border: 1px solid #63a72f;
+  }
 }

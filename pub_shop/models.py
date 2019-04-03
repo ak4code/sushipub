@@ -38,6 +38,9 @@ class Product(AbstractShop):
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2, verbose_name='Цена')
     image = models.ImageField(upload_to='shop/products', blank=True, null=True, verbose_name='Изображение')
     slug = models.SlugField(default='slug', verbose_name='Ссылка')
+    ingredients = models.ManyToManyField('Ingredient', blank=True, verbose_name='Ингредиенты')
+    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name='Количество шт.')
+    weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='Вес в гр.')
 
     def __str__(self):
         return self.name
@@ -54,3 +57,15 @@ class Product(AbstractShop):
         ordering = ['pk']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Название')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['pk']
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product
+from .models import Category, Product, Ingredient
 from pub_nav.models import MenuItem
 from django.contrib.contenttypes.admin import GenericTabularInline
 
@@ -21,3 +21,9 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('image_tag', 'name', 'category', 'price')
     list_display_links = ('name',)
     readonly_fields = ['image_tag']
+    filter_horizontal = ('ingredients',)
+
+
+@admin.register(Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    pass

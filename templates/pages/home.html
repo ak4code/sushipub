@@ -6,7 +6,7 @@
             <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
                 <h3 class="uk-heading-line"><span>{{ category.name }}</span></h3>
             </a>
-            <product-list :limit=5 :category={{ category.id }}></product-list>
+            <product-list :limit=4 :category-id={{ category.id }}></product-list>
         {% endfor %}
     </div>
 {% endblock %}

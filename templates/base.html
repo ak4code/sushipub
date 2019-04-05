@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="language" content="RU">
-    <title>{% block title %}{{ shop.name }} - ТЕМРЮК{% endblock %}</title>
+    <title>{% block title %}{{ shop.name }}{% endblock %}</title>
     <meta name="robots" content="index,follow"/>
     <meta name="description" content="{% block meta_description %}{{ shop.meta_description }}{% endblock %}">
     <meta name="keywords" content="Роллы, суши, пицца, гирос, доставка, Темрюк, заказ, Sushi Pub">
@@ -46,7 +46,8 @@
                 </div>
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
-                        <li class="uk-active"><a href="/">Меню</a></li>
+                        <li><a href="/">Контакты</a></li>
+                        <li><a href="/">Доставка и оплата</a></li>
                     </ul>
                 </div>
             </nav>
@@ -55,7 +56,7 @@
     <nav class="uk-navbar uk-navbar-container pub-category-nav" uk-navbar uk-sticky="animation: uk-animation-slide-top">
         <div class="uk-navbar-center">
             <ul class="pub-category-menu">
-                {% nav_horizontal_menu 'top-bar' %}
+                {% nav_menu_items 'top-bar' %}
             </ul>
         </div>
     </nav>
@@ -63,7 +64,43 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer></footer>
+    <footer class="uk-light">
+        <div class="uk-padding">
+            <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small" uk-grid>
+                <div class="uk-width-1-2@m">
+                    <h3>{{ shop.name }}</h3>
+                    <div class="uk-flex uk-flex-center uk-flex-middle uk-flex-wrap uk-grid-small">
+                        <div class="uk-width-1-4@m">
+                            <a href="/" title="{{ shop.name }}" class="uk-logo">
+                                <img width="150" height="140" uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}"
+                                     alt="{{ shop.name }}">
+                            </a>
+                        </div>
+                        <div class="uk-width-3-4@m">
+                            <div>{{ shop.address }}</div>
+                            <div>{{ shop.meta_description }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-4@m">
+                    <h3>Информация</h3>
+                    <ul class="uk-nav uk-nav-default">
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Политика обработки персональнных данных</a></li>
+                    </ul>
+                </div>
+                <div class="uk-width-1-4@m">
+                    <h3>Мы в соц. сетях</h3>
+                </div>
+                <div class="uk-width-1-1">
+                    <div class="uk-text-center"
+                         style="color: white; font-weight: bold; text-shadow: 0px 2px 3px #000;">{% now 'Y' %} г.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 {% render_bundle 'app' 'js' %}
 </body>

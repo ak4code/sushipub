@@ -2,6 +2,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
 from .paginations import ProductPagination
@@ -18,6 +21,16 @@ class ProductViewSet(viewsets.ModelViewSet):
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('category', 'price')
+
+    @action(detail=False)
+    def short_list(self, request):
+        if 'category' in request.query_params:
+            category = request.query_params['category']
+            products = Product.objects.filter(category_id=category)[:4]
+            serializer = self.get_serializer(products, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(list())
 
 
 class CategoryDetail(DetailView):

@@ -20,6 +20,10 @@ from django.urls import path, include
 from pub_main.views import PageDetail, HomePage
 from .api import router
 
+admin.site.site_title = 'Sushi Pub - Админ панель'
+admin.site.site_header = 'Sushi Pub'
+admin.site.index_title = 'Sushi Pub - Админ панель'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),

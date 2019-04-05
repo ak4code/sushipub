@@ -5,6 +5,7 @@ from tinymce import HTMLField
 
 
 class AbstractShop(models.Model):
+    meta_title = models.CharField(max_length=255, blank=True, null=True, verbose_name='Мета заголовок')
     meta_description = models.TextField(blank=True, null=True, verbose_name='Мета описание')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
@@ -37,7 +38,7 @@ class Product(AbstractShop):
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2, verbose_name='Цена')
     image = models.ImageField(upload_to='shop/products', blank=True, null=True, verbose_name='Изображение')
-    slug = models.SlugField(default='slug', verbose_name='Ссылка')
+    slug = models.SlugField(blank=True, null=True, verbose_name='Ссылка')
     ingredients = models.ManyToManyField('Ingredient', blank=True, verbose_name='Ингредиенты')
     quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name='Количество шт.')
     weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='Вес в гр.')
@@ -51,7 +52,7 @@ class Product(AbstractShop):
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
 
-    image_tag.short_description = 'Картинка'
+    image_tag.short_description = 'Просмотр изображения'
 
     class Meta:
         ordering = ['pk']

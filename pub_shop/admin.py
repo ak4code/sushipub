@@ -18,10 +18,25 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
+    list_filter = ('category',)
+    search_fields = ('name',)
     list_display = ('image_tag', 'name', 'category', 'price')
     list_display_links = ('name',)
     readonly_fields = ['image_tag']
     filter_horizontal = ('ingredients',)
+    fieldsets = (
+        ('Основное', {
+            'classes': ('extrapretty',),
+            'fields': ('name', 'category', 'price', 'image', 'image_tag', 'quantity', 'weight', 'ingredients')
+        }),
+        ('Контент', {
+            'classes': ('wide',),
+            'fields': ('content',)
+        }),
+        ('Мета', {
+            'fields': ('slug', 'meta_description')
+        }),
+    )
 
 
 @admin.register(Ingredient)

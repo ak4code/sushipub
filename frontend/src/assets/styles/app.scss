@@ -47,9 +47,11 @@ main {
 }
 
 footer {
-  min-height: 250px;
-  background: #4a4a4a;
+  background: #2b2a2a;
   border-top: 1px solid #dddddd;
+  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23e87b7b' fill-opacity='0.1'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  color: white;
+  text-shadow: 0px 2px 3px #000;
 }
 
 .pub-logo-sticky {
@@ -75,4 +77,11 @@ footer {
     color: white;
     border: 1px solid #63a72f;
   }
+}
+
+.pub-title {
+  margin: 0.3em 0 1em 0;
+  font-size: 1.5em;
+  color: #474A51;
+  line-height: 25px;
 }

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ category.name }} - {{ block.super }}{% endblock %}
+{% block title %}{{ category.meta_title }} - {{ block.super }}{% endblock %}
 
 {% block meta_description %}{{ category.meta_description }}{% endblock %}
 
 {% block content %}
     <article class="uk-container uk-container-large">
-        <h1>{{ category.name }}</h1>
+        <h1 class="pub-title">{{ category.meta_title }}</h1>
     </article>
 {% endblock %}

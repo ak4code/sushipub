@@ -7,6 +7,7 @@ import UIkit from 'uikit'
 import '@/assets/styles/styles.scss'
 import store from './store'
 import ProductShort from './components/shop/ProductShort'
+import CategoryDetail from './components/shop/CategoryDetail'
 
 window.UIkit = UIkit
 
@@ -18,6 +19,7 @@ new Vue({
     el: '#app',
     store,
     components: {
-        ProductShort
+        ProductShort,
+        CategoryDetail
     }
 })

@@ -1,7 +1,7 @@
 <template>
     <div class="uk-card uk-card-small uk-card-default pub-product-card">
-        <div class="uk-card-media-top">
-            <img :src="product.image" :alt="product.name">
+        <div class="uk-card-media-top uk-cover-container uk-height-medium">
+            <img :src="product.image" class="uk-align-center" :alt="product.name" uk-cover>
         </div>
         <div class="uk-card-body uk-text-center uk-padding-remove">
             <span class="pub-product-name">{{product.name}}</span>

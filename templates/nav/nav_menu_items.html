@@ -1,7 +1,17 @@
-{% for item in menu.items.all %}
+{% if no_menu %}
     <li>
-        <a href="{{ item.content_object.get_absolute_url }}" title="{{ item.name }}">
-            {{ item.name }}
+        <a href="#">
+            Меню отсутсвует
         </a>
     </li>
-{% endfor %}
+{% else %}
+    {% for item in menu.items.all %}
+        <li>
+            <a href="{{ item.content_object.get_absolute_url }}" title="{{ item.name }}">
+                {{ item.name }}
+            </a>
+        </li>
+    {% endfor %}
+{% endif %}
+
+

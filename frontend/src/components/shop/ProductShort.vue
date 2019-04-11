@@ -1,5 +1,5 @@
 <template>
-    <div class="uk-flex uk-grid-small uk-grid-match uk-margin-small-bottom uk-child-width-1-1 uk-child-width-1-5@m"
+    <div class="uk-flex uk-grid-small uk-grid-match uk-margin-small-bottom uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
          uk-grid v-if="products.length">
         <div v-for="product in products" :key="product.id">
             <product-card :product="product"></product-card>

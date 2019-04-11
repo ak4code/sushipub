@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from solo.models import SingletonModel
 from tinymce import HTMLField
 
@@ -56,6 +57,9 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('page', args=[str(self.slug)])
 
     class Meta:
         verbose_name_plural = 'Страницы'

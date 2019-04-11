@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Shop, Phone, Link, Page
 from solo.admin import SingletonModelAdmin
-
+from pub_shop.admin import MenuItemInline
 
 class PhoneInline(admin.TabularInline):
     model = Phone
@@ -25,5 +25,8 @@ class ShopAdmin(SingletonModelAdmin):
 class PageAdmin(admin.ModelAdmin):
     list_display = ('title', 'created', 'updated')
     prepopulated_fields = {"slug": ("title",)}
+    inlines = [
+        MenuItemInline
+    ]
 
 # shop = Shop.get_solo()

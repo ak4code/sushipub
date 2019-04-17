@@ -28,13 +28,17 @@
 </head>
 <body>
 <div id="app">
-    <header class="pub-header">
-        <div class="uk-container uk-container-large">
+    <header>
+        {# desktop nav-bar #}
+        <div class="uk-container uk-container-large uk-visible@s uk-visible@m pub-header">
             <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" uk-navbar>
                 <div class="uk-navbar-left">
-                    <a href="/" title="{{ shop.name }}" class="uk-navbar-item uk-logo">
+                    <a href="/" title="{{ shop.name }}" class="uk-navbar-item pub-logo uk-logo">
                         <img uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}" alt="{{ shop.name }}">
                     </a>
+                    <div>
+                        {{ shop.address }}
+                    </div>
                 </div>
                 <div class="uk-navbar-center">
                     <ul class="uk-navbar-nav">
@@ -52,14 +56,41 @@
                 </div>
             </nav>
         </div>
+        {# mobile nav-bar #}
+        <div class="uk-container uk-container-expand uk-hidden@m pub-nav-mobile"
+             uk-sticky="animation: uk-animation-slide-top">
+            <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" uk-navbar>
+                <div class="uk-navbar-left">
+                    <a href="/" title="{{ shop.name }}" class="uk-navbar-item uk-logo">
+                        <img uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}" alt="{{ shop.name }}">
+                    </a>
+                </div>
+                <div class="uk-navbar-right">
+                    <a class="uk-navbar-toggle" href="#" style="color: red;" uk-toggle="target: #offcanvas-push">
+                        <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Меню</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
     </header>
-    <nav class="uk-navbar uk-navbar-container pub-category-nav" uk-navbar uk-sticky="animation: uk-animation-slide-top">
+    <nav class="uk-navbar uk-navbar-container pub-category-nav uk-visible@s uk-visible@m" uk-navbar
+         uk-sticky="animation: uk-animation-slide-top">
         <div class="uk-navbar-center">
             <ul class="pub-category-menu">
                 {% nav_menu_items 'top-bar' %}
             </ul>
         </div>
     </nav>
+    <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+        <div class="uk-offcanvas-bar uk-flex uk-flex-column">
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+            <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                <li class="uk-active"><a href="#">Active</a></li>
+            </ul>
+
+        </div>
+
+    </div>
     <main class="pub-main">
         {% block content %}
         {% endblock %}
@@ -85,9 +116,7 @@
                 <div class="uk-width-1-4@m">
                     <h3>Информация</h3>
                     <ul class="uk-nav uk-nav-default">
-                        <li><a href="#">Контакты</a></li>
-                        <li><a href="#">Доставка и оплата</a></li>
-                        <li><a href="#">Политика обработки персональнных данных</a></li>
+                        {% nav_menu_items 'footer' %}
                     </ul>
                 </div>
                 <div class="uk-width-1-4@m">

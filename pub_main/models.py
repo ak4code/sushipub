@@ -8,6 +8,7 @@ class Shop(SingletonModel):
     name = models.CharField(max_length=60, default='Магазин', verbose_name='Название')
     address = models.TextField(blank=True, null=True, verbose_name='Адрес')
     meta_description = models.TextField(blank=True, null=True, verbose_name='Мета описание')
+    content = HTMLField(blank=True, null=True, verbose_name='Контент')
 
     def get_primary_phone(self):
         return self.phones.get(primary=True)
@@ -34,7 +35,13 @@ class Phone(models.Model):
 
 
 class Link(models.Model):
-    name = models.CharField(max_length=20, verbose_name='Название')
+    LINK_TYPE = (
+        ('instagram', 'Instagram'),
+        ('vk', 'ВКонтакте'),
+        ('ok', 'Одноклассники'),
+        ('web', 'Другое'),
+    )
+    name = models.CharField(max_length=20, choices=LINK_TYPE, default='web', verbose_name='Название')
     url = models.CharField(max_length=255, verbose_name='Ссылка')
     shop = models.ForeignKey('Shop', related_name='links', on_delete=models.CASCADE)
 

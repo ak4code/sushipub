@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from django.contrib import admin
 from .models import Category, Product, Ingredient
 from pub_nav.models import MenuItem
@@ -21,7 +23,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ('name',)
     list_display = ('image_tag', 'name', 'category', 'price')
-    list_display_links = ('name',)
+    list_display_links = ('image_tag', 'name',)
     readonly_fields = ['image_tag']
     filter_horizontal = ('ingredients',)
     fieldsets = (

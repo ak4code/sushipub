@@ -13,8 +13,14 @@ html, body {
 }
 
 .pub-header {
-  background-color: white;
   border-bottom: 1px solid #ddd;
+  background-color: white;
+}
+
+.pub-nav-mobile {
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1) !important;
+  background: white !important;
 }
 
 .pub-category-nav {

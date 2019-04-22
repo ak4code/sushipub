@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from pub_main.views import PageDetail, HomePage
+from pub_shop.views import CartPage
 from .api import router
 
 admin.site.site_title = 'Sushi Pub - Админ панель'
@@ -30,8 +31,12 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('menu/', include('pub_shop.urls')),
     path('', HomePage.as_view(), name='home'),
+    path('cart/', CartPage.as_view(), name='cart'),
     path('<slug:slug>/', PageDetail.as_view(), name='page')
 ]
 
 if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns = [path('__debug__/', include(debug_toolbar.urls)), ] + urlpatterns
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

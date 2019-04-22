@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from tinymce import HTMLField
+from uuslug import uuslug
 
 
 class AbstractShop(models.Model):
@@ -22,6 +23,11 @@ class Category(AbstractShop):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uuslug(self.name, instance=self)
+        super(Category, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('category-detail', args=[str(self.slug)])
@@ -46,11 +52,19 @@ class Product(AbstractShop):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = uuslug(self.name, instance=self)
+        super(Product, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse('product-detail', kwargs={'category_slug': self.category.slug, 'product_slug': self.slug})
 
     def image_tag(self):
-        return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+        if self.image:
+            return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+        else:
+            return mark_safe('<img src="/static/src/assets/img/noimage.png" width="50" height="50" />')
 
     image_tag.short_description = 'Просмотр изображения'
 

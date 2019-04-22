@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -49,3 +49,6 @@ class ProductDetail(DetailView):
 
     def get_object(self):
         return get_object_or_404(Product, slug__iexact=self.kwargs['product_slug'])
+
+class CartPage(TemplateView):
+    template_name = 'pages/cart.html'

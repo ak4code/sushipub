@@ -61,13 +61,18 @@
              uk-sticky="animation: uk-animation-slide-top">
             <nav class="uk-navbar uk-navbar-container uk-navbar-transparent" uk-navbar>
                 <div class="uk-navbar-left">
+                    <a class="uk-navbar-toggle" href="#" style="color: red;" uk-toggle="target: #offcanvas-push">
+                        <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Меню</span>
+                    </a>
+                </div>
+                <div class="uk-navbar-center">
                     <a href="/" title="{{ shop.name }}" class="uk-navbar-item uk-logo">
                         <img uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}" alt="{{ shop.name }}">
                     </a>
                 </div>
                 <div class="uk-navbar-right">
-                    <a class="uk-navbar-toggle" href="#" style="color: red;" uk-toggle="target: #offcanvas-push">
-                        <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Меню</span>
+                    <a href="{% url 'cart' %}" class="uk-navbar-item" style="min-height: 50px; padding: 0 25px">
+                        <cart-button></cart-button>
                     </a>
                 </div>
             </nav>
@@ -79,6 +84,11 @@
             <ul class="pub-category-menu">
                 {% nav_menu_items 'top-bar' %}
             </ul>
+        </div>
+        <div class="uk-navbar-right">
+            <a href="{% url 'cart' %}" class="uk-navbar-item" style="min-height: 50px; padding: 0 25px">
+                <cart-button></cart-button>
+            </a>
         </div>
     </nav>
     <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">

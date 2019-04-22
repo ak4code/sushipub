@@ -13,18 +13,18 @@ class MenuItemInline(GenericTabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
     inlines = [MenuItemInline, ]
+    exclude = ('slug', )
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("name",)}
     list_filter = ('category',)
     search_fields = ('name',)
     list_display = ('image_tag', 'name', 'category', 'price')
     list_display_links = ('image_tag', 'name',)
     readonly_fields = ['image_tag']
+    exclude = ('slug',)
     filter_horizontal = ('ingredients',)
     fieldsets = (
         ('Основное', {
@@ -36,7 +36,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('content',)
         }),
         ('Мета', {
-            'fields': ('slug', 'meta_description')
+            'fields': ('meta_description',)
         }),
     )
 

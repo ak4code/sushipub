@@ -12,6 +12,11 @@ html, body {
   padding: 0;
 }
 
+h1 {
+  font-size: 18px !important;
+  line-height: 30px !important;
+}
+
 header#pub-site-header {
   border-bottom: 1px solid #ddd;
   background-color: white;
@@ -96,6 +101,7 @@ footer {
       background: linear-gradient(to bottom, #d60000, #a90808);
       box-shadow: 0px 3px 5px rgba(140, 140, 140, 0.74);
     }
+
     &:active {
       border: 2px solid #6f0303;
       color: #dddddd;
@@ -148,6 +154,7 @@ footer {
 .pub-cart-button {
   position: relative;
   cursor: pointer;
+
   .pub-cart-counter {
     position: absolute;
     top: -5px;
@@ -159,6 +166,7 @@ footer {
     z-index: 1;
     font-size: xx-small;
   }
+
   .pub-cart-total {
     position: absolute;
     bottom: 9px;

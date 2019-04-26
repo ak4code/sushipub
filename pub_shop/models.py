@@ -19,7 +19,7 @@ class Category(AbstractShop):
     name = models.CharField(max_length=255, verbose_name='Название')
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
     image = models.ImageField(upload_to='shop/categories', blank=True, null=True, verbose_name='Изображение')
-    slug = models.SlugField(default='slug', verbose_name='Ссылка')
+    slug = models.SlugField(blank=True, null=True, verbose_name='Ссылка')
 
     def __str__(self):
         return self.name

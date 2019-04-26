@@ -1,24 +1,41 @@
-from pprint import pprint
-
 from django.contrib import admin
 from .models import Category, Product, Ingredient
-from pub_nav.models import MenuItem
-from django.contrib.contenttypes.admin import GenericTabularInline
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 
-class MenuItemInline(GenericTabularInline):
-    model = MenuItem
-    extra = 1
+class CategoryResource(resources.ModelResource):
+    class Meta:
+        model = Category
+        fields = ('id', 'meta_title', 'meta_description', 'name', 'content', 'image',)
+
+
+class ProductResource(resources.ModelResource):
+    class Meta:
+        model = Product
+
+
+class IngredientResource(resources.ModelResource):
+    class Meta:
+        model = Ingredient
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    inlines = [MenuItemInline, ]
-    exclude = ('slug', )
+class CategoryAdmin(ImportExportModelAdmin):
+    exclude = ('slug',)
+    fieldsets = (
+        ('Основное', {
+            'classes': ('extrapretty',),
+            'fields': ('name', 'content', 'image',)
+        }),
+        ('SEO', {
+            'fields': ('meta_title', 'meta_description',)
+        }),
+    )
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
     list_filter = ('category',)
     search_fields = ('name',)
     list_display = ('image_tag', 'name', 'category', 'price')
@@ -39,8 +56,9 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('meta_description',)
         }),
     )
+    raw_id_fields = ('category',)
 
 
 @admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
+class IngredientAdmin(ImportExportModelAdmin):
     pass

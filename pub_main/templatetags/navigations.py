@@ -1,5 +1,5 @@
 from django import template
-from pub_nav.models import Menu
+from pub_main.models import Menu
 
 register = template.Library()
 

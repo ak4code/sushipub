@@ -2,11 +2,15 @@ from django.db import models
 from django.urls import reverse
 from solo.models import SingletonModel
 from tinymce import HTMLField
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 class Shop(SingletonModel):
     name = models.CharField(max_length=60, default='Магазин', verbose_name='Название')
     address = models.TextField(blank=True, null=True, verbose_name='Адрес')
+    work = models.CharField(max_length=60, default='Заказ с 11:00 до 24:00', verbose_name='Режим работы')
+    meta_title = models.CharField(max_length=150, blank=True, null=True, verbose_name='Мета заголовок')
     meta_description = models.TextField(blank=True, null=True, verbose_name='Мета описание')
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
 
@@ -71,3 +75,41 @@ class Page(models.Model):
     class Meta:
         verbose_name_plural = 'Страницы'
         verbose_name = 'Страница'
+
+
+class Menu(models.Model):
+    POSITIONS = (
+        (None, 'Выбрать позицию'),
+        ('header', 'Шапка'),
+        ('top-bar', 'Верхняя панель'),
+        ('footer', 'Подвал'),
+    )
+    name = models.CharField(max_length=255, verbose_name='Название')
+    position = models.CharField(max_length=20, default=None, unique=True, db_index=True, choices=POSITIONS,
+                                verbose_name='Позиция меню')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Меню'
+        verbose_name_plural = 'Меню'
+
+
+class MenuItem(models.Model):
+    menu = models.ForeignKey(Menu, related_name='items', on_delete=models.CASCADE, verbose_name='Меню')
+    name = models.CharField(max_length=255, verbose_name='Название')
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='childs', on_delete=models.CASCADE,
+                               verbose_name='Родитель')
+    order = models.PositiveIntegerField(default=0, verbose_name='Порядок')
+    content_type = models.ForeignKey(ContentType, null=True, blank=True, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(null=True, blank=True, )
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Пункт меню'
+        verbose_name_plural = 'Пункты меню'

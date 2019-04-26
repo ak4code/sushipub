@@ -8,7 +8,7 @@ class HomePage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.exclude(products__isnull=True)
+        context['categories'] = Category.objects.exclude(products__isnull=True).prefetch_related('products')
         return context
 
 

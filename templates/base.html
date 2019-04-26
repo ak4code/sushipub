@@ -44,7 +44,7 @@
                     <ul class="uk-navbar-nav">
                         <li class="uk-text-center">
                             <h4 class="uk-margin-remove">{{ shop.get_primary_phone }}<br>
-                                <small class="uk-text-muted uk-text-small">Заказ с 11:00 до 24:00</small>
+                                <small class="uk-text-muted uk-text-small">{{ shop.work }}</small>
                             </h4>
                         </li>
                     </ul>
@@ -106,7 +106,7 @@
         {% endblock %}
     </main>
     <footer class="uk-light">
-        <div class="uk-padding">
+        <div class="uk-padding uk-container uk-container-large">
             <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small" uk-grid>
                 <div class="uk-width-1-2@m">
                     <h3>{{ shop.name }}</h3>

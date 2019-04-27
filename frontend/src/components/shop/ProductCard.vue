@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <div class="uk-card-body uk-text-center uk-padding-remove">
+        <div class="uk-card-body uk-text-center uk-card-small">
             <span class="pub-product-name">{{product.name}}</span>
             <br>
             <small class="uk-text-muted">{{product.quantity}} шт.</small>

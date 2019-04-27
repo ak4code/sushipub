@@ -10,6 +10,9 @@
         {% endfor %}
         <section class="pub-content">
             <h1 class="uk-h1 uk-text-center">{{ shop.meta_title }}</h1>
+            <div>
+                {{ shop.content|safe }}
+            </div>
         </section>
     </div>
 {% endblock %}

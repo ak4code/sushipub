@@ -16,7 +16,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('category')
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)
@@ -26,7 +26,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def short_list(self, request):
         if 'category' in request.query_params:
             category = request.query_params['category']
-            products = Product.objects.filter(category_id=category)[:4]
+            products = Product.objects.filter(category_id=category).select_related('category')[:4]
             serializer = self.get_serializer(products, many=True)
             return Response(serializer.data)
         else:
@@ -48,7 +48,7 @@ class ProductDetail(DetailView):
     template_name = 'pub_shop/product_detail.html'
 
     def get_object(self):
-        return get_object_or_404(Product, slug__iexact=self.kwargs['product_slug'])
+        return get_object_or_404(Product.objects.select_related('category'), slug__iexact=self.kwargs['product_slug'])
 
 class CartPage(TemplateView):
     template_name = 'pages/cart.html'

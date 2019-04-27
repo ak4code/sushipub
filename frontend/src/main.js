@@ -10,6 +10,7 @@ import store from './store'
 import ProductShort from './components/shop/ProductShort'
 import CategoryDetail from './components/shop/CategoryDetail'
 import CartButton from './components/shop/CartButton'
+import CartItems from './components/shop/CartItems'
 
 
 window.UIkit = UIkit
@@ -24,6 +25,7 @@ new Vue({
     components: {
         ProductShort,
         CategoryDetail,
-        CartButton
+        CartButton,
+        CartItems
     }
 })

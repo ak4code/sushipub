@@ -33,6 +33,16 @@ export default new Vuex.Store({
             state.cart.items.find(item => {
                 if (item.id === id) item.qty++
             })
+        },
+        DECREMENT_ITEM_QTY (state, id) {
+            state.cart.items.find(item => {
+                if (item.id === id) item.qty--
+            })
+        },
+        SET_ITEM_QTY (state, i) {
+            state.cart.items.find(item => {
+                if (item.id === i.id) item.qty = i.qty
+            })
         }
     },
     actions: {
@@ -45,6 +55,10 @@ export default new Vuex.Store({
             } else {
                 commit('ADD_TO_CART', item)
             }
+            Vue.$storage.set('cart', state.cart)
+        },
+        changeItemCart ({state, commit}, item) {
+            commit('SET_ITEM_QTY', item)
             Vue.$storage.set('cart', state.cart)
         }
     }

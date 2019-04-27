@@ -18,6 +18,7 @@
 
 <script>
     import ProductCard from '@/components/shop/ProductCard'
+
     export default {
         name: "product-list",
         props: {
@@ -27,7 +28,8 @@
             }
         },
         components: {
-            ProductCard
+            ProductCard,
+
         },
         data: () => ({
             products: [],
@@ -41,11 +43,10 @@
             async getProducts () {
                 let {data} = await this.$axios.get(`/api/products/short_list?category=${this.categoryId}`)
                 this.products = data
-                await this.getCategory()
+                await this.getCategory(data)
             },
-            async getCategory () {
-                let {data} = await this.$axios.get(`/api/categories/${this.categoryId}`)
-                this.category = data
+            async getCategory (res) {
+                if (res[0].hasOwnProperty('category_info')) this.category = res[0].category_info
             }
         }
     }

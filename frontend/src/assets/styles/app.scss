@@ -12,6 +12,10 @@ html, body {
   padding: 0;
 }
 
+body {
+  background: #f1f1f1;
+}
+
 h1 {
   font-size: 18px !important;
   line-height: 30px !important;
@@ -32,7 +36,10 @@ header#pub-site-header {
   background: white !important;
   border-bottom: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, .1) !important;
+}
 
+.pub-category-navbar {
+  background: white !important;
   .pub-category-menu {
     display: -webkit-box;
     display: -ms-flexbox;

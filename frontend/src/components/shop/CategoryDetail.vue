@@ -43,18 +43,17 @@
         components: {
             ProductCard
         },
-        created () {
+        created() {
             this.getProducts()
         },
         methods: {
-            async getProducts () {
+            async getProducts() {
                 let {data} = await this.$axios.get(`/api/products?category=${this.categoryId}`)
                 this.products = data
-                await this.getCategory()
+                await this.getCategory(data.results)
             },
-            async getCategory () {
-                let {data} = await this.$axios.get(`/api/categories/${this.categoryId}`)
-                this.category = data
+            async getCategory(res) {
+                if (res[0].hasOwnProperty('category_info')) this.category = await res[0].category_info
             }
         }
     }

@@ -7,12 +7,12 @@
 {% block content %}
     <article class="uk-container uk-container-large">
         <header>
-            <h1>{{ page.title }}</h1>
+            <h1 class="uk-text-center">{{ page.title }}</h1>
         </header>
         <main>
-            <section class="content">
+            <div class="uk-card uk-card-small uk-card-default uk-card-body">
                 {{ page.content|safe }}
-            </section>
+            </div>
         </main>
     </article>
 {% endblock %}

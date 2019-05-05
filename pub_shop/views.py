@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from .models import Category, Product
 from .serializers import CategorySerializer, ProductSerializer
 from .paginations import ProductPagination
-
+from .pusher import socket
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -49,6 +49,7 @@ class ProductDetail(DetailView):
 
     def get_object(self):
         return get_object_or_404(Product.objects.select_related('category'), slug__iexact=self.kwargs['product_slug'])
+
 
 class CartPage(TemplateView):
     template_name = 'pages/cart.html'

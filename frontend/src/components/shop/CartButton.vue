@@ -16,6 +16,9 @@
         created () {
             this.getCart()
         },
+        mounted () {
+
+        },
         watch: {
             total: function () {
                 UIkit.toggle(document.querySelector('.pub-cart-button'), {

@@ -84,3 +84,16 @@ class Ingredient(models.Model):
         ordering = ['pk']
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
+
+
+class Destination(models.Model):
+    name = models.CharField(max_length=256, verbose_name='Название')
+    before = models.IntegerField(verbose_name='До 500 руб.')
+    after = models.IntegerField(verbose_name='От 500 руб.')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Доставка'
+        verbose_name_plural = 'Доставка'

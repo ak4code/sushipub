@@ -113,3 +113,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+PUSHER_APP_ID = config('PUSHER_APP_ID')
+PUSHER_KEY = config('PUSHER_KEY')
+PUSHER_SECRET = config('PUSHER_SECRET')

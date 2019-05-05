@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.urls import path, include
-from pub_main.views import PageDetail, HomePage
+from pub_main.views import PageDetail, HomePage, OrderView
 from pub_shop.views import CartPage
 from .api import router
 
@@ -30,8 +32,10 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('api/', include(router.urls)),
     path('menu/', include('pub_shop.urls')),
-    path('', HomePage.as_view(), name='home'),
+    path('accounts/login/', LoginView.as_view(template_name='pages/login.html'), name='login'),
     path('cart/', CartPage.as_view(), name='cart'),
+    path('orders/', login_required(OrderView.as_view()), name='orders'),
+    path('', HomePage.as_view(), name='home'),
     path('<slug:slug>/', PageDetail.as_view(), name='page')
 ]
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Ingredient
+from .models import Category, Product, Ingredient, Destination
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -61,4 +61,9 @@ class ProductAdmin(ImportExportModelAdmin):
 
 @admin.register(Ingredient)
 class IngredientAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(Destination)
+class DestinationAdmin(admin.ModelAdmin):
     pass

@@ -1,6 +1,6 @@
 //SUSHI PUB THEME 2019
 /* theme color */
-$--color-primary: darkred;
+$--color-primary: #5fc72b;
 
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
@@ -14,11 +14,6 @@ html, body {
 
 body {
   background: #f1f1f1;
-}
-
-h1 {
-  font-size: 18px !important;
-  line-height: 30px !important;
 }
 
 header#pub-site-header {
@@ -40,6 +35,7 @@ header#pub-site-header {
 
 .pub-category-navbar {
   background: white !important;
+
   .pub-category-menu {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -68,9 +64,8 @@ main.pub-main {
 }
 
 footer {
-  background: #2b2a2a;
+  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/dark-honeycomb.png");
   border-top: 1px solid #dddddd;
-  background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23e87b7b' fill-opacity='0.1'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   color: white;
   text-shadow: 0px 2px 3px #000;
 }
@@ -80,6 +75,10 @@ footer {
 }
 
 .pub-product-card {
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #ffffff;
+
   .pub-product-name {
     font: 700 18px/21px "Roboto Slab", "Times New Roman", serif;
   }
@@ -89,6 +88,7 @@ footer {
   }
 
   &:hover {
+    border: 1px solid #5fc72b;
     .pub-product-ingridients {
       opacity: 1;
     }
@@ -122,12 +122,13 @@ footer {
   border: 1px solid #e21b22;
   background: white;
   color: #4a4a4a;
+  border-radius: 5px;
   transition: all .3s ease-out;
 
   &:hover {
-    background: #92c73d;
+    background: #5fc72b;
     color: white;
-    border: 1px solid #63a72f;
+    border: 1px solid #218734;
   }
 }
 
@@ -151,7 +152,7 @@ footer {
   .pub-ig {
     color: white;
     padding: 5px 10px;
-    background: linear-gradient(to bottom, #ff7820, #d20000);
+    background: linear-gradient(to bottom, #5fc72b, #218734);
     border-radius: 10px;
     margin: 5px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.65);
@@ -178,11 +179,38 @@ footer {
     position: absolute;
     bottom: 9px;
     left: -28px;
-    background: green;
+    background: #218734;
     border-radius: 15%;
     padding: 0px 4px;
     color: white;
     z-index: 1;
     font-size: xx-small;
+  }
+}
+
+.pub-color-heading {
+  position: relative;
+
+  &:after {
+    content: ' ';
+    background: #bf0909;
+    position: absolute;
+  }
+}
+
+.pub-login-form {
+  border-radius: 5px;
+  border: 1px solid darkred;
+  padding: 20px;
+  background: white;
+
+  input {
+    width: 100%;
+    font-size: 24px;
+    line-height: 48px;
+    background: #ecf5ec;
+    border: 1px solid darkred;
+    padding-left: 20px;
+    box-sizing: border-box;
   }
 }

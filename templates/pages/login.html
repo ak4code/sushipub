@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="uk-container uk-container-large">
+        <h1 class="uk-text-center">{{ shop.name }}</h1>
+        <div class="uk-flex uk-flex-middle uk-flex-center">
+            <div>
+                <form class="pub-login-form" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" id="submit" value="Войти"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

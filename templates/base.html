@@ -107,33 +107,32 @@
         {% endblock %}
     </main>
     <footer class="uk-light">
-        <div class="uk-padding uk-container uk-container-large">
+        <div class="uk-padding-small uk-container uk-container-large">
             <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small" uk-grid>
-                <div class="uk-width-1-2@m">
-                    <h3>{{ shop.name }}</h3>
-                    <div class="uk-flex uk-flex-center uk-flex-middle uk-flex-wrap uk-grid-small">
-                        <div class="uk-width-1-4@m">
-                            <a href="/" title="{{ shop.name }}" class="uk-logo">
-                                <img width="150" height="140" uk-svg src="{% static 'src/assets/img/pub-logo.svg' %}"
-                                     alt="{{ shop.name }}">
-                            </a>
-                        </div>
-                        <div class="uk-width-3-4@m">
-                            <div class="uk-card uk-card-small uk-card-body">
-                                <div>{{ shop.address }}</div>
-                                <div>{{ shop.meta_description }}</div>
-                            </div>
-                        </div>
+                <div class="uk-width-1-4@m">
+                    <div class="uk-card uk-card-small uk-card-body">
+                        <h3>Меню</h3>
                     </div>
                 </div>
                 <div class="uk-width-1-4@m">
-                    <h3>Информация</h3>
-                    <ul class="uk-nav uk-nav-default">
-                        {% nav_menu_items 'footer' %}
-                    </ul>
+                    <div class="uk-card uk-card-small uk-card-body">
+                        <h3>{{ shop.name }}</h3>
+                        <div>{{ shop.address }}</div>
+                        <div>{{ shop.meta_description }}</div>
+                    </div>
                 </div>
                 <div class="uk-width-1-4@m">
-                    <h3>Мы в соц. сетях</h3>
+                    <div class="uk-card uk-card-small uk-card-body">
+                        <h3>Информация</h3>
+                        <ul class="uk-nav uk-nav-default">
+                            {% nav_menu_items 'footer' %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="uk-width-1-4@m">
+                    <div class="uk-card uk-card-small uk-card-body">
+                        <h3>Мы в соц. сетях</h3>
+                    </div>
                 </div>
                 <div class="uk-width-1-1">
                     <div class="uk-text-center"

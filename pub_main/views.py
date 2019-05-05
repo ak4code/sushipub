@@ -11,6 +11,9 @@ class HomePage(TemplateView):
         context['categories'] = Category.objects.exclude(products__isnull=True).prefetch_related('products')
         return context
 
+class OrderView(TemplateView):
+    template_name = 'pages/orders.html'
+
 
 class PageDetail(DetailView):
     model = Page

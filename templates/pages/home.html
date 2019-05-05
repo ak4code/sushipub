@@ -4,14 +4,20 @@
     <div class="uk-container uk-container-large">
         {% for category in categories %}
             <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
-                <h3 class="uk-heading-line"><span>{{ category.name }}</span></h3>
+                <h3 class="uk-heading-line pub-color-heading"><span>{{ category.name }}</span></h3>
             </a>
             <product-short :category-id={{ category.id }}></product-short>
         {% endfor %}
         <section class="pub-content">
-            <h1 class="uk-h1 uk-text-center">{{ shop.meta_title }}</h1>
-            <div>
-                {{ shop.content|safe }}
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-header">
+                    <h1 class="uk-card-title uk-text-center">
+                        {{ shop.meta_title }}
+                    </h1>
+                </div>
+                <div class="uk-card-body">
+                    {{ shop.content|safe }}
+                </div>
             </div>
         </section>
     </div>

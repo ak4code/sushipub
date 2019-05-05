@@ -3,10 +3,13 @@
 // 1. Your custom variables and variable overwrites in ./theme/_variables.scss
 // $global-link-color: #DA7D02;
 @import "theme/variables";
-
 // 2. Import default variables and available mixins.
 @import "~uikit/src/scss/variables.scss";
 @import "~uikit/src/scss/mixins.scss";
+
+@mixin hook-card-default() {
+  border-radius: 5px;
+}
 
 // 3. Your custom mixin overwrites.
 //@import "theme/accordion-mixins.scss";

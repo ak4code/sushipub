@@ -46,6 +46,9 @@
         created() {
             this.getProducts()
         },
+        mounted () {
+            this.subscribe()
+        },
         methods: {
             async getProducts() {
                 let {data} = await this.$axios.get(`/api/products?category=${this.categoryId}`)
@@ -54,6 +57,13 @@
             },
             async getCategory(res) {
                 if (res[0].hasOwnProperty('category_info')) this.category = await res[0].category_info
+            },
+            subscribe () {
+                const channel = this.$pusher.subscribe('order')
+
+                channel.bind('checkout', function (data) {
+                    console.log(data)
+                }, this)
             }
         }
     }

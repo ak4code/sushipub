@@ -6,20 +6,29 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         cart: {
-            items: []
+            items: [],
+            delivery: 0,
         },
     },
     getters: {
         getItems (state) {
             return state.cart.items
         },
+        getDelivery (state) {
+            return state.cart.delivery
+        },
         getItem: (state) => (id) => {
             return state.cart.items.find(item => item.id === id)
         },
         getTotal (state) {
-            return state.cart.items.reduce((summ, item) => {
+            let items = state.cart.items.reduce((summ, item) => {
                 return summ + (item.price * item.qty)
             }, 0)
+            if (!items) {
+                return 0
+            } else {
+                return items + state.cart.delivery
+            }
         }
     },
     mutations: {
@@ -28,6 +37,9 @@ export default new Vuex.Store({
         },
         ADD_TO_CART (state, item) {
             state.cart.items.push(item)
+        },
+        DELETE_ITEM_CART (state, index) {
+            state.cart.items.splice(index, 1)
         },
         INCREMENT_ITEM_QTY (state, id) {
             state.cart.items.find(item => {
@@ -43,10 +55,16 @@ export default new Vuex.Store({
             state.cart.items.find(item => {
                 if (item.id === i.id) item.qty = i.qty
             })
+        },
+        SET_DELIVERY (state, price) {
+            state.cart.delivery = price
         }
     },
     actions: {
-        getCartItems ({commit}) {
+        getCartItems ({state, commit}) {
+            if (!Vue.$storage.get('cart')) {
+                Vue.$storage.set('cart', state.cart)
+            }
             commit('SET_CART', Vue.$storage.get('cart'))
         },
         addItemToCart ({state, commit, getters}, item) {
@@ -59,6 +77,10 @@ export default new Vuex.Store({
         },
         changeItemCart ({state, commit}, item) {
             commit('SET_ITEM_QTY', item)
+            Vue.$storage.set('cart', state.cart)
+        },
+        deleteItemCart ({state, commit}, index) {
+            commit('DELETE_ITEM_CART', index)
             Vue.$storage.set('cart', state.cart)
         }
     }

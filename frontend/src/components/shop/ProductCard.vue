@@ -1,6 +1,7 @@
 <template>
     <div class="uk-card uk-card-small uk-card-default pub-product-card">
-        <div class="uk-card-media-top uk-cover-container uk-height-medium uk-position-relative">
+        <div class="uk-card-media-top uk-cover-container uk-position-relative" style="min-height: ">
+            <canvas height="300"></canvas>
             <img v-if="product.image" :src="product.image" class="uk-align-center" :alt="product.name" uk-cover>
             <img v-else src="/static/src/assets/img/noimage.png" class="uk-align-center" :alt="product.name" uk-cover>
             <div class="pub-product-ingridients uk-flex uk-flex-middle uk-flex-center uk-flex-wrap uk-flex-wrap-middle">

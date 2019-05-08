@@ -10,13 +10,19 @@
             <br>
             <div class="uk-flex uk-flex-center uk-margin" v-if="products.next">
                 <div>
-                    <a :href="products.next" class="uk-button uk-button-default">Показать еще</a>
+                    <el-button @click="loadMore" class="uk-button uk-button-default">Показать еще</el-button>
                 </div>
             </div>
         </div>
         <div v-else>
-            <div class="uk-flex uk-flex-center uk-padding-large">
-                <div class="uk-text-center">
+            <div class="uk-flex uk-flex-center uk-padding-large"
+                 v-loading="loading"
+                 element-loading-text="Загрузка..."
+                 element-loading-spinner="el-icon-loading"
+                 element-loading-background="rgba(0, 0, 0, 0.8)"
+                 style="min-height: 250px"
+            >
+                <div class="uk-text-center" v-if="!loading">
                     <h2 class="uk-text-center">Раздел еще не заполнен</h2>
                     <a href="/" class="uk-button uk-button-default">Вернуться на главную</a>
                 </div>
@@ -38,25 +44,38 @@
         },
         data: () => ({
             category: null,
+            loading: true,
             products: {},
         }),
         components: {
             ProductCard
         },
-        created() {
+        created () {
             this.getProducts()
         },
         mounted () {
             this.subscribe()
         },
         methods: {
-            async getProducts() {
+            async getProducts () {
                 let {data} = await this.$axios.get(`/api/products?category=${this.categoryId}`)
                 this.products = data
                 await this.getCategory(data.results)
+                this.loading = false
             },
-            async getCategory(res) {
-                if (res[0].hasOwnProperty('category_info')) this.category = await res[0].category_info
+            async getCategory (res) {
+                if (res.length) {
+                    if (res[0].hasOwnProperty('category_info')) this.category = await res[0].category_info
+                }
+            },
+            async loadMore () {
+                await this.$axios.get(this.products.next)
+                    .then(res => {
+                        this.products.results.push(...res.data.results)
+                        this.products.next = res.data.next
+                        this.products.previous = res.data.previous
+                    })
+                    .catch()
             },
             subscribe () {
                 const channel = this.$pusher.subscribe('order')

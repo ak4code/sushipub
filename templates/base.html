@@ -50,9 +50,19 @@
                     </ul>
                 </div>
                 <div class="uk-navbar-right">
-                    <ul class="uk-navbar-nav">
-                        {% nav_menu_items 'header' %}
-                    </ul>
+                    {% nav_menu_items 'header' as header_menu %}
+                    {% if header_menu %}
+                        <ul class="uk-navbar-nav">
+                            {% for menu_item in header_menu.items.all %}
+                                <li>
+                                    <a href="{{ menu_item.content_object.get_absolute_url }}"
+                                       title="{{ menu_item.name }}">
+                                        {{ menu_item.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </nav>
         </div>
@@ -81,9 +91,19 @@
     <div uk-sticky="animation: uk-animation-slide-top" class="pub-category-nav uk-visible@s uk-visible@m">
         <nav class="uk-navbar uk-navbar-container uk-container uk-container-large pub-category-navbar" uk-navbar>
             <div class="uk-navbar-center">
-                <ul class="pub-category-menu">
-                    {% nav_menu_items 'top-bar' %}
-                </ul>
+                {% nav_menu_items 'category-top' as category_menu %}
+                {% if category_menu %}
+                    <ul class="pub-category-menu">
+                        {% for menu_item in category_menu.items.all %}
+                            <li>
+                                <a href="{{ menu_item.content_object.get_absolute_url }}"
+                                   title="{{ menu_item.name }}">
+                                    {{ menu_item.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
             <div class="uk-navbar-right">
                 <a href="{% url 'cart' %}" class="uk-navbar-item" style="min-height: 50px; padding: 0 25px">
@@ -95,10 +115,18 @@
     <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
         <div class="uk-offcanvas-bar uk-flex uk-flex-column">
             <button class="uk-offcanvas-close" type="button" uk-close></button>
-            <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-                <li class="uk-active"><a href="#">Active</a></li>
-            </ul>
-
+            {% if category_menu %}
+                <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
+                    {% for menu_item in category_menu.items.all %}
+                        <li class="uk-active">
+                            <a href="{{ menu_item.content_object.get_absolute_url }}"
+                               title="{{ menu_item.name }}">
+                                {{ menu_item.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
 
     </div>
@@ -112,6 +140,18 @@
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
                         <h3>Меню</h3>
+                        {% if category_menu %}
+                            <ul class="uk-nav uk-nav-default">
+                                {% for menu_item in category_menu.items.all %}
+                                    <li>
+                                        <a href="{{ menu_item.content_object.get_absolute_url }}"
+                                           title="{{ menu_item.name }}">
+                                            {{ menu_item.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="uk-width-1-4@m">
@@ -124,9 +164,19 @@
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
                         <h3>Информация</h3>
-                        <ul class="uk-nav uk-nav-default">
-                            {% nav_menu_items 'footer' %}
-                        </ul>
+                        {% nav_menu_items 'footer-info' as info_menu %}
+                        {% if info_menu %}
+                            <ul class="uk-nav uk-nav-default">
+                                {% for menu_item in info_menu.items.all %}
+                                    <li>
+                                        <a href="{{ menu_item.content_object.get_absolute_url }}"
+                                           title="{{ menu_item.name }}">
+                                            {{ menu_item.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="uk-width-1-4@m">

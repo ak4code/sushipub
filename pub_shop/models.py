@@ -87,7 +87,7 @@ class Ingredient(models.Model):
 
 
 class Destination(models.Model):
-    name = models.CharField(max_length=256, verbose_name='Название')
+    name = models.CharField(max_length=255, verbose_name='Название')
     before = models.IntegerField(verbose_name='До 500 руб.')
     after = models.IntegerField(verbose_name='От 500 руб.')
 
@@ -95,5 +95,44 @@ class Destination(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['pk']
         verbose_name = 'Доставка'
         verbose_name_plural = 'Доставка'
+
+
+class Order(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Имя клиента')
+    phone = models.CharField(max_length=255, verbose_name='Телефон клиента')
+    address = models.TextField(verbose_name='Адрес клиента')
+    comment = models.TextField(verbose_name='Комментарий к заказу')
+    person = models.PositiveSmallIntegerField(verbose_name='Количество персон')
+    area = models.ForeignKey(Destination, blank=True, null=True, on_delete=models.SET_NULL)
+    items = models.ManyToManyField(
+        Product,
+        through='OrderItem',
+        through_fields=('order', 'product'),
+        verbose_name='Позиции'
+    )
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+
+    def __str__(self):
+        return 'Заказ {0}'.format(self.pk)
+
+    class Meta:
+        ordering = ['created']
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
+    qty = models.PositiveSmallIntegerField(verbose_name='Количество')
+
+    def __str__(self):
+        return '{0} x {1} шт.'.format(self.product.name, self.qty)
+
+    class Meta:
+        verbose_name = 'Позиция заказа'
+        verbose_name_plural = 'Позиции заказа'

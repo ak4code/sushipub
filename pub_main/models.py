@@ -78,14 +78,8 @@ class Page(models.Model):
 
 
 class Menu(models.Model):
-    POSITIONS = (
-        (None, 'Выбрать позицию'),
-        ('header', 'Шапка'),
-        ('top-bar', 'Верхняя панель'),
-        ('footer', 'Подвал'),
-    )
     name = models.CharField(max_length=255, verbose_name='Название')
-    position = models.CharField(max_length=20, default=None, unique=True, db_index=True, choices=POSITIONS,
+    position = models.CharField(max_length=20, default=None, unique=True, db_index=True,
                                 verbose_name='Позиция меню')
 
     def __str__(self):

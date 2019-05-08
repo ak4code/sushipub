@@ -6,7 +6,3 @@ Vue.use(Vue2Storage, {
     driver: 'local',
     ttl: 60 * 60 * 24 * 1000
 })
-
-if (!Vue.$storage.get('cart')) {
-    Vue.$storage.set('cart', {items: []})
-}

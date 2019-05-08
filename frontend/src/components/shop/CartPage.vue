@@ -67,37 +67,71 @@
                             {{scope.row.price * scope.row.qty}} р.
                         </template>
                     </el-table-column>
+                    <el-table-column width="80" align="center">
+                        <template slot-scope="scope">
+                            <el-button size="mini" type="danger" icon="el-icon-delete"
+                                       @click="deleteItemCart(scope.$index)" circle></el-button>
+                        </template>
+                    </el-table-column>
                 </el-table>
-                <div class="uk-flex uk-padding uk-flex-between">
-                    <div>
-                        <el-button type="success" @click="next">Оформить заказ</el-button>
+                <div class="uk-flex uk-flex-wrap uk-grid-small uk-padding uk-flex-between">
+                    <div class="uk-margin-bottom">
+                        <el-select v-model="formDelivery.area"
+                                   placeholder="Доставка" @change="changeDelivery">
+                            <el-option
+                                    v-for="item in areas"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
                     </div>
-                    <div>
-                        <span class="uk-text-large">Итого: {{total}}  руб.</span>
+                    <div class="uk-margin-bottom">
+                        <el-button type="success" @click="next" v-if="formDelivery.area">
+                            Оформить заказ
+                        </el-button>
+                    </div>
+                    <div class="uk-flex-first uk-margin-bottom">
+                        <div v-if="delivery">Доставка: + {{delivery}} руб.</div>
+                        <div class="uk-text-large">Итого: {{total}} руб.</div>
                     </div>
                 </div>
             </div>
             <div class="delivery" v-else-if="active === 1">
-                <el-form :inline="true" :model="formDelivery">
-                    <el-form-item label="Ваше Имя">
-                        <el-input v-model="formDelivery.name" placeholder="Ваше Имя">
+                <el-form label-width="auto" :model="formDelivery">
+                    <el-form-item label="Ваше имя">
+                        <el-input v-model="formDelivery.name" placeholder="Ваше имя">
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Номер телефона">
-                        <el-input v-model="formDelivery.name" placeholder="+7 999 999-99-99">
+                        <el-input v-model="formDelivery.phone" placeholder="+7 999 999-99-99">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="Ваше Имя">
-                        <el-input v-model="formDelivery.name" placeholder="Ваше Имя">
+                    <el-form-item label="Район доставки">
+                        <el-select v-model="formDelivery.area"
+                                   placeholder=" Доставка" @change="changeDelivery" disabled>
+                            <el-option
+                                    v-for="item in areas"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item.id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="Адрес">
+                        <el-input v-model="formDelivery.address" placeholder="ул. Декабристов д. 9г">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="Ваше Имя">
-                        <el-input v-model="formDelivery.name" placeholder="Ваше Имя">
+                    <el-form-item label="Количество персон">
+                        <el-input-number :min="1" :max="10" v-model="formDelivery.person" type="number">
+                        </el-input-number>
+                    </el-form-item>
+                    <el-form-item label="Комментарий к заказу">
+                        <el-input v-model="formDelivery.comment" type="textarea">
                         </el-input>
                     </el-form-item>
-                    <el-form-item label="Ваше Имя">
-                        <el-input v-model="formDelivery.name" placeholder="Ваше Имя">
-                        </el-input>
+                    <el-form-item>
+                        <el-button type="primary" @click="">Заказать</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -109,34 +143,51 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
 
     export default {
         name: "cart-page",
         data: () => ({
             active: 0,
+            areas: [],
             formDelivery: {
                 name: null,
                 phone: null,
                 address: null,
                 area: null,
                 person: 1,
+                comment: null
             }
         }),
         created () {
+            this.getDestinations()
             this.getCart()
         },
         computed: {
             ...mapGetters({
                 items: 'getItems',
-                total: 'getTotal'
+                total: 'getTotal',
+                delivery: 'getDelivery',
             })
         },
         methods: {
             ...mapActions({
                 getCart: 'getCartItems',
-                changeItemCart: 'changeItemCart'
+                changeItemCart: 'changeItemCart',
+                deleteItemCart: 'deleteItemCart'
             }),
+            ...mapMutations({
+                setDelivery: 'SET_DELIVERY'
+            }),
+            changeDelivery () {
+                let delivery = this.areas.find(i => i.id === this.formDelivery.area)
+                this.setDelivery(this.total > 500 ? delivery.after : delivery.before)
+            },
+            async getDestinations () {
+                await this.$axios.get('/api/destinations')
+                    .then(res => this.areas = res.data)
+                    .catch(e => console.log(e))
+            },
             handleChangeQty (item) {
                 this.changeItemCart(item)
             },

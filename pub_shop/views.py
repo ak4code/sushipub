@@ -5,14 +5,20 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Category, Product
-from .serializers import CategorySerializer, ProductSerializer
+from .models import Category, Product, Destination
+from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer
 from .paginations import ProductPagination
 from .pusher import socket
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.prefetch_related('products')
     serializer_class = CategorySerializer
+
+
+class DestinationViewSet(viewsets.ModelViewSet):
+    queryset = Destination.objects.all()
+    serializer_class = DestinationSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -26,7 +32,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     def short_list(self, request):
         if 'category' in request.query_params:
             category = request.query_params['category']
-            products = Product.objects.filter(category_id=category).select_related('category')[:4]
+            products = Product.objects.select_related('category').filter(category_id=category)[:4]
             serializer = self.get_serializer(products, many=True)
             return Response(serializer.data)
         else:
@@ -39,7 +45,7 @@ class CategoryDetail(DetailView):
     template_name = 'pub_shop/category_detail.html'
 
     def get_object(self):
-        return get_object_or_404(Category, slug__iexact=self.kwargs['slug'])
+        return get_object_or_404(Category.objects.prefetch_related('products'), slug__iexact=self.kwargs['slug'])
 
 
 class ProductDetail(DetailView):

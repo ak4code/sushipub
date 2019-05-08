@@ -58,3 +58,4 @@ class MenuItemInline(TabularInlineWithGeneric):
 @admin.register(Menu)
 class MenuAdmin(GenericAdminModelAdmin):
     inlines = (MenuItemInline,)
+    content_type_whitelist = ('pub_main/page', 'pub_shop/category',)

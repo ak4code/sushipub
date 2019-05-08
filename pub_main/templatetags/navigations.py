@@ -4,13 +4,10 @@ from pub_main.models import Menu
 register = template.Library()
 
 
-@register.inclusion_tag('nav/nav_menu_items.html', takes_context=True)
-def nav_menu_items(context, position):
-    context['no_menu'] = False
+@register.simple_tag
+def nav_menu_items(position):
     try:
-        menu = Menu.objects.get(position__contains=position)
-        context['menu'] = menu
+        menu = Menu.objects.prefetch_related('items', 'items__content_object').get(position__contains=position)
+        return menu
     except Menu.DoesNotExist as e:
-        context['error'] = e
-        context['no_menu'] = True
-    return context
+        return ''

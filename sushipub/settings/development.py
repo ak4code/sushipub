@@ -20,6 +20,10 @@ DATABASES = {
     }
 }
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend'),
+)
+
 WEBPACK_LOADER = {
     'DEFAULT': {
         'CACHE': not DEBUG,

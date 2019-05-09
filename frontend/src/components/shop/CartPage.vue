@@ -136,7 +136,15 @@
                 </el-form>
             </div>
             <div class="success" v-else-if="active === 2">
-
+                <div class="uk-flex uk-flex-middle uk-flex-center">
+                    <div class="uk-margin uk-padding">
+                        <div class="uk-card uk-padding-large uk-text-center uk-card-default uk-box-shadow-large">
+                            <h2>Ваш заказ оформлен!</h2>
+                            <div class="uk-text-large">Ожидайте звонка оператора для потверждения заказа.</div>
+                            <a href="/">На главную</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -174,7 +182,8 @@
             ...mapActions({
                 getCart: 'getCartItems',
                 changeItemCart: 'changeItemCart',
-                deleteItemCart: 'deleteItemCart'
+                deleteItemCart: 'deleteItemCart',
+                resetCart: 'resetCart'
             }),
             ...mapMutations({
                 setDelivery: 'SET_DELIVERY'
@@ -201,7 +210,11 @@
                     items: this.items
                 }
                 await this.$axios.post('/api/orders', order)
-                    .then(r => console.dir(r))
+                    .then(r => {
+                        this.active = 2
+                        console.dir(r)
+                        this.resetCart()
+                    })
                     .catch(e => console.dir(e))
             }
         }

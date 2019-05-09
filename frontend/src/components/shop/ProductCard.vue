@@ -1,5 +1,5 @@
 <template>
-    <div class="uk-card uk-card-small uk-card-default pub-product-card">
+    <div class="uk-card uk-card-small uk-box-shadow-hover-medium uk-card-default pub-product-card">
         <div class="uk-card-media-top uk-cover-container uk-position-relative" style="min-height: 250px">
             <img v-if="product.image" :src="product.image" class="uk-align-center" :alt="product.name" uk-cover>
             <img v-else src="/static/src/assets/img/noimage.png" class="uk-align-center" :alt="product.name" uk-cover>

@@ -58,6 +58,12 @@ export default new Vuex.Store({
         },
         SET_DELIVERY (state, price) {
             state.cart.delivery = price
+        },
+        RESET_CART (state) {
+            state.cart = {
+                items: [],
+                delivery: 0,
+            }
         }
     },
     actions: {
@@ -81,6 +87,10 @@ export default new Vuex.Store({
         },
         deleteItemCart ({state, commit}, index) {
             commit('DELETE_ITEM_CART', index)
+            Vue.$storage.set('cart', state.cart)
+        },
+        resetCart ({state, commit}) {
+            commit('RESET_CART')
             Vue.$storage.set('cart', state.cart)
         }
     }

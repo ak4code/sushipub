@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Ingredient, Destination
+from .models import Category, Product, Ingredient, Destination, Order, OrderItem
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -67,3 +67,13 @@ class IngredientAdmin(ImportExportModelAdmin):
 @admin.register(Destination)
 class DestinationAdmin(admin.ModelAdmin):
     pass
+
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 2
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderItemInline, ]

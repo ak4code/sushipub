@@ -23,7 +23,6 @@
             total: function () {
                 UIkit.toggle(document.querySelector('.pub-cart-button'), {
                     animation: 'uk-animation-scale-up',
-                    mode: 'media',
                     cls: 'sd'
                 }).toggle()
             }

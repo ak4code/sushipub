@@ -5,8 +5,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Category, Product, Destination
-from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer
+from .models import Category, Product, Destination, Order
+from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
 from .paginations import ProductPagination
 from .pusher import socket
 
@@ -21,8 +21,13 @@ class DestinationViewSet(viewsets.ModelViewSet):
     serializer_class = DestinationSerializer
 
 
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.prefetch_related('items', 'items__product', 'items__product__ingredients', 'items__product__category')
+    serializer_class = OrderSerializer
+
+
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.select_related('category')
+    queryset = Product.objects.select_related('category').prefetch_related('ingredients')
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)

@@ -18,11 +18,11 @@ export default new Vuex.Store({
             return state.cart.delivery
         },
         getItem: (state) => (id) => {
-            return state.cart.items.find(item => item.id === id)
+            return state.cart.items.find(item => item.product.id === id)
         },
         getTotal (state) {
             let items = state.cart.items.reduce((summ, item) => {
-                return summ + (item.price * item.qty)
+                return summ + (item.product.price * item.qty)
             }, 0)
             if (!items) {
                 return 0
@@ -43,17 +43,17 @@ export default new Vuex.Store({
         },
         INCREMENT_ITEM_QTY (state, id) {
             state.cart.items.find(item => {
-                if (item.id === id) item.qty++
+                if (item.product.id === id) item.qty++
             })
         },
         DECREMENT_ITEM_QTY (state, id) {
             state.cart.items.find(item => {
-                if (item.id === id) item.qty--
+                if (item.product.id === id) item.qty--
             })
         },
         SET_ITEM_QTY (state, i) {
             state.cart.items.find(item => {
-                if (item.id === i.id) item.qty = i.qty
+                if (item.product.id === i.product.id) item.qty = i.qty
             })
         },
         SET_DELIVERY (state, price) {
@@ -68,8 +68,8 @@ export default new Vuex.Store({
             commit('SET_CART', Vue.$storage.get('cart'))
         },
         addItemToCart ({state, commit, getters}, item) {
-            if (getters.getItem(item.id)) {
-                commit('INCREMENT_ITEM_QTY', item.id)
+            if (getters.getItem(item.product.id)) {
+                commit('INCREMENT_ITEM_QTY', item.product.id)
             } else {
                 commit('ADD_TO_CART', item)
             }

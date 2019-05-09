@@ -139,7 +139,7 @@
             <div class="uk-flex uk-flex-center uk-flex-wrap uk-grid-small" uk-grid>
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
-                        <h3>Меню</h3>
+                        <h3 class="uk-heading-divider">Меню</h3>
                         {% if category_menu %}
                             <ul class="uk-nav uk-nav-default">
                                 {% for menu_item in category_menu.items.all %}
@@ -156,14 +156,14 @@
                 </div>
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
-                        <h3>{{ shop.name }}</h3>
+                        <h3 class="uk-heading-divider">{{ shop.name }}</h3>
                         <div>{{ shop.address }}</div>
                         <div>{{ shop.meta_description }}</div>
                     </div>
                 </div>
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
-                        <h3>Информация</h3>
+                        <h3 class="uk-heading-divider">Информация</h3>
                         {% nav_menu_items 'footer-info' as info_menu %}
                         {% if info_menu %}
                             <ul class="uk-nav uk-nav-default">
@@ -181,7 +181,7 @@
                 </div>
                 <div class="uk-width-1-4@m">
                     <div class="uk-card uk-card-small uk-card-body">
-                        <h3>Мы в соц. сетях</h3>
+                        <h3 class="uk-heading-divider">Мы в соц. сетях</h3>
                     </div>
                 </div>
                 <div class="uk-width-1-1">

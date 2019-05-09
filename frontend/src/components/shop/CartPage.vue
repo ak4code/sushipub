@@ -27,9 +27,9 @@
                             align="center"
                     >
                         <template slot-scope="scope">
-                            <img class="uk-preserve-width uk-border-rounded" :src="scope.row.image" width="70"
+                            <img class="uk-preserve-width uk-border-rounded" :src="scope.row.product.image" width="70"
                                  alt=""
-                                 v-if="scope.row.image">
+                                 v-if="scope.row.product.image">
                             <img class="uk-preserve-width uk-border-rounded"
                                  src="/static/src/assets/img/noimage.png"
                                  width="70"
@@ -37,11 +37,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="name"
+                            prop="product.name"
                             label="Наименование">
                     </el-table-column>
                     <el-table-column
-                            prop="price"
+                            prop="product.price"
                             label="Цена"
                             width="80"
                             align="center"
@@ -64,7 +64,7 @@
                             align="center"
                     >
                         <template slot-scope="scope">
-                            {{scope.row.price * scope.row.qty}} р.
+                            {{scope.row.product.price * scope.row.qty}} р.
                         </template>
                     </el-table-column>
                     <el-table-column width="80" align="center">
@@ -74,10 +74,10 @@
                         </template>
                     </el-table-column>
                 </el-table>
-                <div class="uk-flex uk-flex-wrap uk-grid-small uk-padding uk-flex-between">
+                <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small uk-padding uk-flex-between">
                     <div class="uk-margin-bottom">
                         <el-select v-model="formDelivery.area"
-                                   placeholder="Доставка" @change="changeDelivery">
+                                   placeholder="Доставка" @change="changeDelivery" name="delivery">
                             <el-option
                                     v-for="item in areas"
                                     :key="item.id"
@@ -87,7 +87,7 @@
                         </el-select>
                     </div>
                     <div class="uk-margin-bottom">
-                        <el-button type="success" @click="next" v-if="formDelivery.area">
+                        <el-button type="success" @click="next" :disabled="!formDelivery.area">
                             Оформить заказ
                         </el-button>
                     </div>
@@ -98,7 +98,7 @@
                 </div>
             </div>
             <div class="delivery" v-else-if="active === 1">
-                <el-form label-width="auto" :model="formDelivery">
+                <el-form label-width="auto" ref="formDelivery" :model="formDelivery">
                     <el-form-item label="Ваше имя">
                         <el-input v-model="formDelivery.name" placeholder="Ваше имя">
                         </el-input>
@@ -131,7 +131,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="">Заказать</el-button>
+                        <el-button type="primary" @click="checkout('formDelivery')">Заказать</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -193,6 +193,16 @@
             },
             next () {
                 this.active++
+            },
+            async checkout (form) {
+                let dForm = this.$refs[form].model
+                let order = {
+                    ...dForm,
+                    items: this.items
+                }
+                await this.$axios.post('/api/orders', order)
+                    .then(r => console.dir(r))
+                    .catch(e => console.dir(e))
             }
         }
     }

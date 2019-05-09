@@ -101,23 +101,28 @@ class Destination(models.Model):
 
 
 class Order(models.Model):
+    STATUS_CHOICES = (
+        (None, 'Выберите статус'),
+        ('new', 'Новый'),
+        ('success', 'Выполнен'),
+        ('canceled', 'Отменен'),
+    )
     name = models.CharField(max_length=255, verbose_name='Имя клиента')
     phone = models.CharField(max_length=255, verbose_name='Телефон клиента')
     address = models.TextField(verbose_name='Адрес клиента')
-    comment = models.TextField(verbose_name='Комментарий к заказу')
-    person = models.PositiveSmallIntegerField(verbose_name='Количество персон')
-    area = models.ForeignKey(Destination, blank=True, null=True, on_delete=models.SET_NULL)
-    items = models.ManyToManyField(
-        Product,
-        through='OrderItem',
-        through_fields=('order', 'product'),
-        verbose_name='Позиции'
-    )
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    updated = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+    comment = models.TextField(blank=True, default='', verbose_name='Комментарий к заказу')
+    person = models.PositiveSmallIntegerField(default=1, verbose_name='Количество персон')
+    area = models.ForeignKey(Destination, blank=True, null=True, on_delete=models.SET_NULL,
+                             verbose_name='Район доставки')
+    status = models.CharField(max_length=8, default='new', choices=STATUS_CHOICES, verbose_name='Статус')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Изменен')
 
     def __str__(self):
         return 'Заказ {0}'.format(self.pk)
+
+    def total(self):
+        return sum([x.amount() for x in self.items.all()])
 
     class Meta:
         ordering = ['created']
@@ -126,9 +131,12 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name='Заказ')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name='Заказ')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
     qty = models.PositiveSmallIntegerField(verbose_name='Количество')
+
+    def amount(self):
+        return self.product.price * self.qty
 
     def __str__(self):
         return '{0} x {1} шт.'.format(self.product.name, self.qty)

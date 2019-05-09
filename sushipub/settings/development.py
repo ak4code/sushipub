@@ -21,7 +21,7 @@ DATABASES = {
 }
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'frontend'),
+    os.path.join(BASE_DIR, 'frontend/src/assets/img'),
 )
 
 WEBPACK_LOADER = {

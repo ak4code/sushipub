@@ -21,6 +21,12 @@
     {% for js_file in app_js_files %}
         <link href="{{ js_file.url }}" rel="preload" as="script">
     {% endfor %}
+    {% if not debug %}
+        {% get_files 'chunk-vendors' 'js' as chunk_js_files %}
+        {% for js_file in chunk_js_files %}
+            <link href="{{ js_file.url }}" rel="preload" as="script">
+        {% endfor %}
+    {% endif %}
     {% for css_file in app_css_files %}
         <link href="{{ css_file.url }}" rel="preload" as="style">
     {% endfor %}

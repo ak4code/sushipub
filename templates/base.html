@@ -199,6 +199,9 @@
         </div>
     </footer>
 </div>
+{% if not debug %}
+    {% render_bundle 'chunk-vendors' 'js' %}
+{% endif %}
 {% render_bundle 'app' 'js' %}
 </body>
 </html>

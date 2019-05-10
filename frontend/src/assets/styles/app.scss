@@ -1,6 +1,7 @@
 //SUSHI PUB THEME 2019
 /* theme color */
-$--color-primary: #5fc72b;
+$--color-primary: #00BB31;
+$--color-primary-light-1: #009A17;
 
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
@@ -64,7 +65,6 @@ main.pub-main {
 }
 
 footer {
-  background: url("/static/footer.png");
   border-top: 1px solid #dddddd;
   color: white;
   text-shadow: 0px 2px 3px #000;
@@ -88,7 +88,7 @@ footer {
   }
 
   &:hover {
-    border: 1px solid #5fc72b;
+    border: 1px solid $--color-primary;
     .pub-product-ingridients {
       opacity: 1;
     }
@@ -126,9 +126,9 @@ footer {
   transition: all .3s ease-out;
 
   &:hover {
-    background: #5fc72b;
+    background: $--color-primary;
     color: white;
-    border: 1px solid #218734;
+    border: 1px solid $--color-primary-light-1;
   }
 }
 
@@ -152,7 +152,7 @@ footer {
   .pub-ig {
     color: white;
     padding: 5px 10px;
-    background: linear-gradient(to bottom, #5fc72b, #218734);
+    background: linear-gradient(to bottom, $--color-primary, $--color-primary-light-1);
     border-radius: 10px;
     margin: 5px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.65);
@@ -179,7 +179,7 @@ footer {
     position: absolute;
     bottom: 9px;
     left: -28px;
-    background: #218734;
+    background: $--color-primary-light-1;
     border-radius: 15%;
     padding: 0px 4px;
     color: white;

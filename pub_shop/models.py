@@ -46,8 +46,10 @@ class Product(AbstractShop):
     image = models.ImageField(upload_to='shop/products', blank=True, null=True, verbose_name='Изображение')
     slug = models.SlugField(blank=True, null=True, verbose_name='Ссылка')
     ingredients = models.ManyToManyField('Ingredient', blank=True, verbose_name='Ингредиенты')
-    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name='Количество шт.')
+    size = models.CharField(max_length=255, blank=True, null=True, verbose_name='Размер')
     weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='Вес в гр.')
+    base = models.ForeignKey('self', related_name='variants', blank=True, null=True, verbose_name='Вариации товара',
+                             on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -64,7 +66,7 @@ class Product(AbstractShop):
         if self.image:
             return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
         else:
-            return mark_safe('<img src="/static/src/assets/img/noimage.png" width="50" height="50" />')
+            return mark_safe('<img src="/static/noimage.png" width="50" height="50" />')
 
     image_tag.short_description = 'Просмотр изображения'
 
@@ -110,7 +112,7 @@ class Order(models.Model):
     name = models.CharField(max_length=255, verbose_name='Имя клиента')
     phone = models.CharField(max_length=255, verbose_name='Телефон клиента')
     address = models.TextField(verbose_name='Адрес клиента')
-    comment = models.TextField(blank=True, default='', verbose_name='Комментарий к заказу')
+    comment = models.TextField(blank=True, null=True, default='', verbose_name='Комментарий к заказу')
     person = models.PositiveSmallIntegerField(default=1, verbose_name='Количество персон')
     area = models.ForeignKey(Destination, blank=True, null=True, on_delete=models.SET_NULL,
                              verbose_name='Район доставки')
@@ -122,7 +124,10 @@ class Order(models.Model):
         return 'Заказ {0}'.format(self.pk)
 
     def total(self):
-        return sum([x.amount() for x in self.items.all()])
+        total = sum([x.amount() for x in self.items.all()])
+        return (total + self.area.after) if total > 500 else (total + self.area.before)
+
+    total.short_description = 'Итого'
 
     class Meta:
         ordering = ['created']
@@ -137,6 +142,8 @@ class OrderItem(models.Model):
 
     def amount(self):
         return self.product.price * self.qty
+
+    amount.short_description = 'Сумма'
 
     def __str__(self):
         return '{0} x {1} шт.'.format(self.product.name, self.qty)

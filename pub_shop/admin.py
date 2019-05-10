@@ -34,8 +34,17 @@ class CategoryAdmin(ImportExportModelAdmin):
     )
 
 
+class ProductVariantInline(admin.TabularInline):
+    model = Product
+    extra = 1
+    verbose_name = "Вариант продукта"
+    verbose_name_plural = "Варианты продукта"
+    fields = ('name', 'category', 'price', 'image', 'size', 'weight',)
+
+
 @admin.register(Product)
 class ProductAdmin(ImportExportModelAdmin):
+    inlines = (ProductVariantInline,)
     list_filter = ('category',)
     search_fields = ('name',)
     list_display = ('image_tag', 'name', 'category', 'price')
@@ -46,17 +55,17 @@ class ProductAdmin(ImportExportModelAdmin):
     fieldsets = (
         ('Основное', {
             'classes': ('extrapretty',),
-            'fields': ('name', 'category', 'price', 'image', 'image_tag', 'quantity', 'weight', 'ingredients')
+            'fields': ('name', 'category', 'price', 'image', 'image_tag', 'size', 'weight', 'ingredients')
         }),
         ('Контент', {
-            'classes': ('wide',),
+            'classes': ('collapse',),
             'fields': ('content',)
         }),
         ('Мета', {
+            'classes': ('collapse',),
             'fields': ('meta_description',)
         }),
     )
-    raw_id_fields = ('category',)
 
 
 @admin.register(Ingredient)
@@ -72,8 +81,11 @@ class DestinationAdmin(admin.ModelAdmin):
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 2
+    readonly_fields = ['amount', ]
+    fields = ('product', 'qty', 'amount',)
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    inlines = [OrderItemInline, ]
+    inlines = (OrderItemInline,)
+    list_display = ('__str__', 'total',)

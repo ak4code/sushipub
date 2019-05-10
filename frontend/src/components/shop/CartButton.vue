@@ -19,14 +19,7 @@
         mounted () {
 
         },
-        watch: {
-            total: function () {
-                UIkit.toggle(document.querySelector('.pub-cart-button'), {
-                    animation: 'uk-animation-scale-up',
-                    cls: 'sd'
-                }).toggle()
-            }
-        },
+        watch: {},
         computed: {
             ...mapGetters({
                 items: 'getItems',

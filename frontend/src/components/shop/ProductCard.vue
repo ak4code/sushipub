@@ -10,19 +10,20 @@
             </div>
         </div>
         <div class="uk-card-body uk-text-center uk-card-small">
-            <span class="pub-product-name">{{product.name}}</span>
-            <br>
-            <small class="uk-text-muted">{{product.quantity}} шт.</small>
+            <div class="pub-product-name">{{product.name}}</div>
+            <div class="uk-text-muted" style="min-height: 30px">
+                <small>{{product.size}}</small>
+            </div>
             <div class="uk-flex uk-grid-small uk-child-width-1-2 uk-flex-middle uk-grid-match uk-margin-auto-vertical"
                  uk-grid>
                 <div class="uk-text-muted uk-text-center">
-                    <span>{{product.weight}} гр.</span>
+                    <span v-if="product.weight">{{product.weight}} гр.</span>
                 </div>
                 <div class="pub-product-price uk-text-center">
                     <span>{{product.price}} ₽</span>
                 </div>
             </div>
-            <div class="uk-flex uk-flex-center">
+            <div class="uk-flex uk-flex-center uk-flex-bottom">
                 <div>
                     <a @click="cartButton" class="uk-button pub-product-btn">
                         В корзину

@@ -1,10 +1,11 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, TemplateView
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from pub_shop.permissions import ClientAppPermission
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
 from .paginations import ProductPagination
@@ -22,8 +23,17 @@ class DestinationViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.prefetch_related('items', 'items__product', 'items__product__ingredients', 'items__product__category')
+    queryset = Order.objects.prefetch_related('items', 'items__product', 'items__product__ingredients',
+                                              'items__product__category')
     serializer_class = OrderSerializer
+
+    @action(detail=False, methods=['post'], permission_classes=[ClientAppPermission], name='Checkout')
+    def checkout(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ProductViewSet(viewsets.ModelViewSet):

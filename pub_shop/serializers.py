@@ -25,10 +25,17 @@ class DestinationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ProductVariantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('id', 'name', 'price', 'weight', 'size', 'image')
+
+
 class ProductSerializer(serializers.ModelSerializer):
     link = serializers.CharField(source='get_absolute_url', read_only=True)
     ingredient_list = IngredientSerializer(source='ingredients', many=True, read_only=True)
     category_info = CategorySerializer(source='category', read_only=True)
+    variants = ProductVariantSerializer(many=True, read_only=True)
 
     class Meta:
         model = Product

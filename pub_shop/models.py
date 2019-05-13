@@ -51,6 +51,7 @@ class Product(AbstractShop):
     base = models.ForeignKey('self', related_name='variants', blank=True, null=True, verbose_name='Вариации товара',
                              on_delete=models.CASCADE)
 
+
     def __str__(self):
         return self.name
 

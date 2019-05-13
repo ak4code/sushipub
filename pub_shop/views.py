@@ -37,7 +37,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.select_related('category').prefetch_related('ingredients')
+    queryset = Product.objects.select_related('category').prefetch_related('ingredients', 'variants').filter(base=None)
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)

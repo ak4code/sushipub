@@ -76,6 +76,7 @@
                 </el-table>
                 <div class="uk-flex uk-flex-middle uk-flex-wrap uk-grid-small uk-padding uk-flex-between">
                     <div class="uk-margin-bottom">
+                        <label class="uk-margin-small-right">Выберите район доставки</label>
                         <el-select v-model="formDelivery.area"
                                    placeholder="Доставка" @change="changeDelivery" name="delivery">
                             <el-option
@@ -157,6 +158,7 @@
         name: "cart-page",
         data: () => ({
             active: 0,
+            tooltip: true,
             areas: [],
             formDelivery: {
                 name: null,
@@ -170,6 +172,9 @@
         created () {
             this.getDestinations()
             this.getCart()
+        },
+        mounted () {
+            document.getElementsByName('delivery')[0].focus()
         },
         computed: {
             ...mapGetters({

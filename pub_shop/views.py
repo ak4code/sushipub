@@ -41,7 +41,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('category', 'price')
+    filterset_fields = ('category',)
 
     @action(detail=False)
     def short_list(self, request):

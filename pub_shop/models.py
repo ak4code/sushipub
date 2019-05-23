@@ -1,4 +1,8 @@
+from pprint import pprint
+
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from tinymce import HTMLField
@@ -50,7 +54,6 @@ class Product(AbstractShop):
     weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='Вес в гр.')
     base = models.ForeignKey('self', related_name='variants', blank=True, null=True, verbose_name='Вариации товара',
                              on_delete=models.CASCADE)
-
 
     def __str__(self):
         return self.name
@@ -134,6 +137,13 @@ class Order(models.Model):
         ordering = ['created']
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+
+
+@receiver(post_save, sender=Order)
+def order_checkout(sender, instance, created, **kwargs):
+    pprint(sender)
+    pprint(instance)
+    pprint(created)
 
 
 class OrderItem(models.Model):

@@ -67,6 +67,10 @@ class ProductAdmin(ImportExportModelAdmin):
         }),
     )
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(base=None)
+
 
 @admin.register(Ingredient)
 class IngredientAdmin(ImportExportModelAdmin):

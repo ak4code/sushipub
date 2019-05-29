@@ -4,8 +4,10 @@ from django.views.generic import DetailView, TemplateView
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from vk_api.utils import get_random_id
 
 from pub_shop.permissions import ClientAppPermission
+from sushipub.vkbot import vk
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
 from .paginations import ProductPagination
@@ -35,13 +37,35 @@ class OrderViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        inputs = ['%s' % (item) for item in instance.items.all()]
+        items = '\n'.join(inputs)
+        total = instance.total()
+        message = f'Новый заказ! \n' \
+            f'Имя: {instance.name}\n' \
+            f'Телефон: {instance.phone}\n' \
+            f'Район доставки: {instance.area.name}\n' \
+            f'Адрес: {instance.address}\n' \
+            f'Кол-во персон: {instance.person}\n' \
+            f'Комментарий: {instance.comment}\n' \
+            f'-----------------------\n' \
+            f'Заказ: \n{items}\n' \
+            f'-----------------------\n' \
+            f'Сумма: {total}'
+        vk.messages.send(
+            user_id=314252417,
+            random_id=get_random_id(),
+            message=message
+        )
+
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.select_related('category').prefetch_related('ingredients', 'variants').filter(base=None)
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend,)
-    filterset_fields = ('category',)
+    filterset_fields = ('category', 'price',)
 
     @action(detail=False)
     def short_list(self, request):

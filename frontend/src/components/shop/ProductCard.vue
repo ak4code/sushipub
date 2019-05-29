@@ -1,7 +1,7 @@
 <template>
     <div class="uk-card uk-card-small uk-box-shadow-hover-medium uk-card-default pub-product-card">
         <div class="uk-card-media-top uk-cover-container uk-position-relative" style="min-height: 250px">
-            <img v-if="checkedProduct.image" :src="checkedProduct.image" class="uk-align-center" :alt="checkedProduct.name" uk-cover>
+            <img v-if="checkedProduct.image || product.image" :src="checkedProduct.image || product.image" class="uk-align-center" :alt="checkedProduct.name" uk-cover>
             <img v-else src="/static/noimage.png" class="uk-align-center" :alt="checkedProduct.name" uk-cover>
             <div class="pub-product-ingridients uk-flex uk-flex-middle uk-flex-center uk-flex-wrap uk-flex-wrap-middle">
                 <div v-for="ig in product.ingredient_list" :key="ig.id" class="pub-ig">

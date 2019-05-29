@@ -1,8 +1,4 @@
-from pprint import pprint
-
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from tinymce import HTMLField
@@ -139,13 +135,6 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
 
-@receiver(post_save, sender=Order)
-def order_checkout(sender, instance, created, **kwargs):
-    pprint(sender)
-    pprint(instance)
-    pprint(created)
-
-
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name='Заказ')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Товар')
@@ -157,7 +146,7 @@ class OrderItem(models.Model):
     amount.short_description = 'Сумма'
 
     def __str__(self):
-        return '{0} x {1} шт.'.format(self.product.name, self.qty)
+        return '{0} x {1} шт. = {2}'.format(self.product.name, self.qty, self.amount())
 
     class Meta:
         verbose_name = 'Позиция заказа'

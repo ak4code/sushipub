@@ -61,7 +61,7 @@ class ProductPKField(serializers.RelatedField):
             'id': value.pk,
             'name': value.name,
             'category': value.category.name,
-            'image': self.context['request'].build_absolute_uri(value.image.url),
+            'image': self.context['request'].build_absolute_uri(value.image.url) if value.image else '',
             'price': value.price
         }
         return obj

@@ -136,7 +136,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div class="success" v-else-if="active === 2">
+            <div class="success" v-else-if="active >= 2">
                 <div class="uk-flex uk-flex-middle uk-flex-center">
                     <div class="uk-margin uk-padding">
                         <div class="uk-card uk-padding-large uk-text-center uk-card-default uk-box-shadow-large">
@@ -219,6 +219,7 @@
                         this.active = 2
                         console.dir(r)
                         this.resetCart()
+                        this.active++
                     })
                     .catch(e => console.dir(e))
             }

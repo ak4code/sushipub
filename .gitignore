@@ -4,6 +4,7 @@ __pycache__/
 .idea/
 media/
 static/
+webpack-stats.json
 
 # Installer logs
 pip-log.txt

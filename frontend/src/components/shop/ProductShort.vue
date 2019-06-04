@@ -41,7 +41,7 @@
         },
         methods: {
             async getProducts () {
-                let {data} = await this.$axios.get(`/api/products/short_list?category=${this.categoryId}`)
+                let {data} = await this.$axios.get(`/api/products/short_list?category=${this.categoryId}&ordering=-price`)
                 this.products = data
                 await this.getCategory(data)
             },

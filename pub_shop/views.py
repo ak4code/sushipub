@@ -1,13 +1,12 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, TemplateView
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from vk_api.utils import get_random_id
 
 from pub_shop.permissions import ClientAppPermission
-from sushipub.vkbot import vk
+from sushipub.vkbot import notify_manager_vk
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
 from .paginations import ProductPagination
@@ -39,40 +38,24 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        inputs = ['%s' % (item) for item in instance.items.all()]
-        items = '\n'.join(inputs)
-        total = instance.total()
-        message = f'Новый заказ! \n' \
-            f'Имя: {instance.name}\n' \
-            f'Телефон: {instance.phone}\n' \
-            f'Район доставки: {instance.area.name}\n' \
-            f'Адрес: {instance.address}\n' \
-            f'Кол-во персон: {instance.person}\n' \
-            f'Комментарий: {instance.comment}\n' \
-            f'-----------------------\n' \
-            f'Заказ: \n{items}\n' \
-            f'-----------------------\n' \
-            f'Сумма: {total}'
-        vk.messages.send(
-            user_id=314252417,
-            random_id=get_random_id(),
-            message=message
-        )
+        notify_manager_vk(instance)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.select_related('category').prefetch_related('ingredients', 'variants').filter(base=None)
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
     filterset_fields = ('category', 'price',)
+    ordering_fields = ('price',)
 
     @action(detail=False)
     def short_list(self, request):
         if 'category' in request.query_params:
             category = request.query_params['category']
-            products = Product.objects.select_related('category').filter(category_id=category)[:4]
-            serializer = self.get_serializer(products, many=True)
+            products = Product.objects.select_related('category').filter(category_id=category)
+            fs = self.filter_queryset(products)
+            serializer = self.get_serializer(fs[:4], many=True)
             return Response(serializer.data)
         else:
             return Response(list())

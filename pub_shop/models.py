@@ -71,7 +71,7 @@ class Product(AbstractShop):
     image_tag.short_description = 'Просмотр изображения'
 
     class Meta:
-        ordering = ['pk']
+        ordering = ['-price']
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 

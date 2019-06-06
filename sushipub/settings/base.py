@@ -106,8 +106,8 @@ MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
+        'pub_shop.permissions.ClientAppPermission',
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'pub_shop.permissions.ClientAppPermission'
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',

@@ -214,7 +214,7 @@
                     ...dForm,
                     items: this.items
                 }
-                await this.$axios.post('/api/orders', order)
+                await this.$axios.post('/api/orders/checkout', order)
                     .then(r => {
                         this.active = 2
                         console.dir(r)

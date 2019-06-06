@@ -1,3 +1,4 @@
+from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, TemplateView
@@ -38,7 +39,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         instance = serializer.save()
-        notify_manager_vk(instance)
+        notify_manager_vk(instance=instance, user_id=settings.VK_NOTIFY_USER)
 
 
 class ProductViewSet(viewsets.ModelViewSet):

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django_filters',
     'genericadmin',
     'import_export',
+    'django_cleanup.apps.CleanupConfig',
     # Apps
     'pub_main.apps.PubMainConfig',
     'pub_shop.apps.PubShopConfig',

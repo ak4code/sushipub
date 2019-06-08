@@ -2,12 +2,20 @@
 {% block title %}{{ shop.meta_title }}{% endblock %}
 {% block content %}
     <div class="uk-container uk-container-large">
-        {% for category in categories %}
-            <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
-                <h3 class="uk-heading-line pub-color-heading"><span>{{ category.name }}</span></h3>
-            </a>
-            <product-short :category-id={{ category.id }}></product-short>
-        {% endfor %}
+        <h3 class="uk-text-center">Наше меню</h3>
+        <div class="uk-flex uk-flex-wrap uk-flex-center uk-flex-middle">
+            {% for category in categories %}
+                <div class="uk-width-1-4@m uk-width-1-2 uk-text-center">
+                    <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
+                        {% if category.image %}
+                            <img src="{{ category.image.url }}" alt="">
+                        {% endif %}
+                        <h3 class="pub-color-heading"><span>{{ category.name }}</span></h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
         <section class="pub-content">
             <div class="uk-card uk-card-default">
                 <div class="uk-card-header">

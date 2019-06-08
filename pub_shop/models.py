@@ -32,6 +32,14 @@ class Category(AbstractShop):
     def get_absolute_url(self):
         return reverse('category-detail', args=[str(self.slug)])
 
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="%s" width="50" height="50" />' % (self.image.url))
+        else:
+            return mark_safe('<img src="/static/noimage.png" width="50" height="50" />')
+
+    image_tag.short_description = 'Просмотр изображения'
+
     class Meta:
         ordering = ['pk']
         verbose_name = 'Категория'

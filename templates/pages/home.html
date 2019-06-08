@@ -8,7 +8,10 @@
                 <div class="uk-width-1-4@m uk-width-1-2 uk-text-center">
                     <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
                         {% if category.image %}
-                            <img src="{{ category.image.url }}" alt="">
+                            <div style="min-height: 240px">
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}"
+                                style="object-fit: contain; width: 100%; height: 100%;">
+                            </div>
                         {% endif %}
                         <h3 class="pub-color-heading"><span>{{ category.name }}</span></h3>
                     </a>

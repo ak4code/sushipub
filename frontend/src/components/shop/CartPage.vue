@@ -31,7 +31,7 @@
                                  alt=""
                                  v-if="scope.row.product.image">
                             <img class="uk-preserve-width uk-border-rounded"
-                                 src="/static/src/assets/img/noimage.png"
+                                 src="/static/noimage.png"
                                  width="70"
                                  alt="" v-else>
                         </template>
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="delivery" v-else-if="active === 1">
-                <el-form label-width="auto" ref="formDelivery" :model="formDelivery">
+                <el-form ref="formDelivery" :model="formDelivery">
                     <el-form-item label="Ваше имя">
                         <el-input v-model="formDelivery.name" placeholder="Ваше имя">
                         </el-input>
@@ -132,7 +132,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="checkout('formDelivery')">Заказать</el-button>
+                        <el-button type="primary" @click="checkout('formDelivery')" v-loading="loading">Заказать</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -141,8 +141,10 @@
                     <div class="uk-margin uk-padding">
                         <div class="uk-card uk-padding-large uk-text-center uk-card-default uk-box-shadow-large">
                             <h2>Ваш заказ оформлен!</h2>
-                            <div class="uk-text-large">Ожидайте звонка оператора для потверждения заказа.</div>
-                            <a href="/">На главную</a>
+                            <div class="uk-text-large uk-margin">Ожидайте звонка оператора для потверждения заказа.</div>
+                            <a href="/">
+                                <el-button type="primary">На главную</el-button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -159,6 +161,7 @@
         data: () => ({
             active: 0,
             tooltip: true,
+            loading: false,
             areas: [],
             formDelivery: {
                 name: null,
@@ -209,16 +212,17 @@
                 this.active++
             },
             async checkout (form) {
+                this.loading = true
                 let dForm = this.$refs[form].model
                 let order = {
                     ...dForm,
                     items: this.items
                 }
                 await this.$axios.post('/api/orders/checkout', order)
-                    .then(r => {
+                    .then(() => {
                         this.active = 2
-                        console.dir(r)
                         this.resetCart()
+                        this.loading = false
                         this.active++
                     })
                     .catch(e => console.dir(e))

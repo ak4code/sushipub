@@ -1,0 +1,14 @@
+НОВЫЙ ЗАКАЗ
+-----------
+Имя: {{order.name}}
+Телефон: {{order.phone}}
+Адрес: {{order.area.name}} {{order.address}}
+Количество персон: {{order.person}}
+Комментарий: {{order.comment}}
+---------------------------
+{% for item in order.items.all %}
+    {{item}}
+{% endfor %}
+---------------------------
+Доставка: {{order.delivery_price}} руб.
+ИТОГО: {{order.total}} руб.

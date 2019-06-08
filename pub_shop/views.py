@@ -11,7 +11,6 @@ from sushipub.vkbot import notify_manager_vk
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
 from .paginations import ProductPagination
-from .pusher import socket
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

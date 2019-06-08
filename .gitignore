@@ -5,6 +5,7 @@ __pycache__/
 media/
 static/
 webpack-stats.json
+webpack-prod-stats.json
 
 # Installer logs
 pip-log.txt

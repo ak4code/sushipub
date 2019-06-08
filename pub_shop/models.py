@@ -41,6 +41,7 @@ class Category(AbstractShop):
 class Product(AbstractShop):
     name = models.CharField(max_length=255, verbose_name='Название')
     category = models.ForeignKey(Category, related_name='products', verbose_name='Категория', on_delete=models.CASCADE)
+    text = models.TextField(blank=True, null=True, verbose_name='Короткое описание')
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
     price = models.DecimalField(max_digits=10, default=0, decimal_places=2, verbose_name='Цена')
     image = models.ImageField(upload_to='shop/products', blank=True, null=True, verbose_name='Изображение')
@@ -127,6 +128,10 @@ class Order(models.Model):
         total = sum([x.amount() for x in self.items.all()])
         return (total + self.area.after) if total > 500 else (total + self.area.before)
 
+    def delivery_price(self):
+        total = sum([x.amount() for x in self.items.all()])
+        return (self.area.after) if total > 500 else (self.area.before)
+
     total.short_description = 'Итого'
 
     class Meta:
@@ -146,7 +151,7 @@ class OrderItem(models.Model):
     amount.short_description = 'Сумма'
 
     def __str__(self):
-        return '{0} x {1} шт. = {2}'.format(self.product.name, self.qty, self.amount())
+        return '{0} x {1} шт. = {2} руб.'.format(self.product.name, self.qty, self.amount())
 
     class Meta:
         verbose_name = 'Позиция заказа'

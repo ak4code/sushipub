@@ -5,12 +5,12 @@
         <h3 class="uk-text-center">Наше меню</h3>
         <div class="uk-flex uk-flex-wrap uk-flex-center uk-grid-small uk-flex-middle">
             {% for category in categories %}
-                <div class="uk-width-1-4@m uk-width-1-2 uk-text-center">
+                <div class="uk-width-1-4@m uk-width-1-1 uk-width-1-2@s uk-text-center">
                     <a href="{% url 'category-detail' category.slug %}" title="{{ category.name }}">
                         {% if category.image %}
                             <div style="min-height: 240px">
                                 <img src="{{ category.image.url }}" alt="{{ category.name }}"
-                                style="object-fit: contain; width: 100%; height: 100%; vertical-align: center;">
+                                style="object-fit: contain; width: 100%; height: 100%; vertical-align: middle;">
                             </div>
                         {% endif %}
                         <h3 class="pub-color-heading"><span>{{ category.name }}</span></h3>

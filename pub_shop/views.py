@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from pub_shop.permissions import ClientAppPermission
+from sushipub.tbot import notify_manager_tg
 from sushipub.vkbot import notify_manager_vk
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer
@@ -39,6 +40,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         instance = serializer.save()
         notify_manager_vk(instance=instance, user_id=settings.VK_NOTIFY_USER)
+        # notify_manager_tg(instance=instance, chat_id=215750267)
 
 
 class ProductViewSet(viewsets.ModelViewSet):

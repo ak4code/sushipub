@@ -1,21 +1,23 @@
 <template>
     <div class="uk-card uk-card-small uk-box-shadow-hover-medium uk-card-default pub-product-card">
-        <div class="uk-card-media-top uk-cover-container uk-position-relative" style="min-height: 250px">
-            <el-image style="height: 250px" :src="checkedProduct.image || '/static/noimage.png'" fit="contain"
+        <div class="uk-card-media-top uk-position-relative">
+            <el-image style="height: 230px; display: block; margin: 0 auto;"
+                      :src="checkedProduct.image || '/static/noimage.png'" fit="contain"
                       :alt="checkedProduct.name"></el-image>
             <div class="pub-product-ingridients uk-flex uk-flex-middle uk-flex-center uk-flex-wrap uk-flex-wrap-middle">
-                <div v-for="ig in product.ingredient_list" :key="ig.id" class="pub-ig">
+                <div v-for="ig in checkedProduct.ingredient_list" :key="ig.id" class="pub-ig"
+                     v-if="checkedProduct.ingredients.length">
                     {{ig.name}}
+                </div>
+                <div class="pub-ig" v-if="checkedProduct.text">
+                    {{checkedProduct.text}}
                 </div>
             </div>
         </div>
         <div class="uk-card-body uk-text-center uk-card-small">
-            <div class="pub-product-name">{{product.name}}</div>
-            <div class="product-size uk-margin-small" style="min-height: 30px">
-                <div class="uk-text-muted" v-if="!product.variants.length">
-                    <small>{{product.size}}</small>
-                </div>
-                <div v-else>
+            <div class="pub-product-name">{{checkedProduct.name}}</div>
+            <div class="product-size uk-margin-small">
+                <div v-if="product.variants.length">
                     <el-radio-group v-model="selectedProduct" @change="changeProduct" size="mini">
                         <el-radio-button :label="product.id">{{product.size}}
                         </el-radio-button>
@@ -27,15 +29,18 @@
                     </el-radio-group>
                 </div>
             </div>
-            <div class="uk-flex uk-grid-small uk-child-width-1-2 uk-flex-middle uk-grid-match uk-margin-auto-vertical"
+            <div class="uk-flex uk-flex-center uk-grid-small uk-flex-wrap uk-flex-middle uk-grid-match uk-margin-auto-vertical"
                  uk-grid>
-                <div class="uk-text-muted uk-text-center">
+                <div class="uk-text-muted uk-text-center uk-text-small">
+                    <span v-if="checkedProduct.size">{{checkedProduct.size}} /</span>
                     <span v-if="checkedProduct.weight">{{checkedProduct.weight}} гр.</span>
                 </div>
                 <div class="pub-product-price uk-text-center">
                     <span>{{checkedProduct.price}} р.</span>
                 </div>
             </div>
+        </div>
+        <div class="uk-card-footer">
             <div class="uk-flex uk-flex-center uk-flex-bottom">
                 <div>
                     <a @click="cartButton" class="uk-button pub-product-btn">

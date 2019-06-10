@@ -1,7 +1,7 @@
 <template>
     <div class="pub-category-detail">
         <div v-if="products.hasOwnProperty('count') && products.count !== 0">
-            <div class="uk-flex uk-grid-small uk-grid-match uk-margin-small-bottom uk-child-width-1-1 uk-child-width-1-5@m"
+            <div class="uk-flex uk-grid-small uk-grid-match uk-margin-small-bottom uk-child-width-1-1 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
                  uk-grid>
                 <div v-for="product in products.results" :key="product.id">
                     <product-card :product="product"></product-card>

@@ -55,7 +55,7 @@ class ProductAdmin(ImportExportModelAdmin):
     fieldsets = (
         ('Основное', {
             'classes': ('extrapretty',),
-            'fields': ('name', 'category', 'price', 'image', 'image_tag', 'size', 'weight', 'ingredients')
+            'fields': ('name', 'category', 'price', 'image', 'image_tag', 'size', 'weight', 'text', 'ingredients')
         }),
         ('Контент', {
             'classes': ('collapse',),

@@ -7,7 +7,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from pub_shop.permissions import ClientAppPermission
-from sushipub.tbot import notify_manager_tg
 from sushipub.vkbot import notify_manager_vk
 from .models import Category, Product, Destination, Order
 from .serializers import CategorySerializer, ProductSerializer, DestinationSerializer, OrderSerializer

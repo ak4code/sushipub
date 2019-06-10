@@ -3,6 +3,7 @@ __pycache__/
 *$py.class
 .idea/
 media/
+dist/
 static/
 webpack-stats.json
 webpack-prod-stats.json

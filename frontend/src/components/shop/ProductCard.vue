@@ -5,8 +5,7 @@
                       :src="checkedProduct.image || '/static/noimage.png'" fit="contain"
                       :alt="checkedProduct.name"></el-image>
             <div class="pub-product-ingridients uk-flex uk-flex-middle uk-flex-center uk-flex-wrap uk-flex-wrap-middle">
-                <div v-for="ig in checkedProduct.ingredient_list" :key="ig.id" class="pub-ig"
-                     v-if="checkedProduct.ingredients.length">
+                <div v-for="ig in checkedProduct.ingredient_list" :key="ig.id" class="pub-ig">
                     {{ig.name}}
                 </div>
                 <div class="pub-ig" v-if="checkedProduct.text">

@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="uk-card-body uk-text-center uk-card-small">
-            <div class="pub-product-name">{{checkedProduct.name}}</div>
+            <a :href="checkedProduct.link" class="pub-product-name">{{checkedProduct.name}}</a>
             <div class="product-size uk-margin-small">
                 <div v-if="product.variants.length">
                     <el-radio-group v-model="selectedProduct" @change="changeProduct" size="mini">

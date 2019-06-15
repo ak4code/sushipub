@@ -59,6 +59,7 @@ class Product(AbstractShop):
     weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='Вес в гр.')
     base = models.ForeignKey('self', related_name='variants', blank=True, null=True, verbose_name='Вариации товара',
                              on_delete=models.CASCADE)
+    is_adding = models.BooleanField(default=False, verbose_name='Показывать в секции добаить к заказу')
 
     def __str__(self):
         return self.name

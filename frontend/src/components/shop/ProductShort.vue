@@ -5,16 +5,6 @@
             <div v-for="product in products" :key="product.id">
                 <product-card :product="product"></product-card>
             </div>
-            <div v-if="category">
-                <a :href="category.link"
-                   class="uk-flex uk-flex-middle uk-text-large uk-text-center pub-product-cat-link">
-                    <div class="uk-width-1-1">
-                        Показать все
-                        <br>
-                        {{category.name}}
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </template>
@@ -25,7 +15,7 @@
     export default {
         name: "product-list",
         props: {
-            categoryId: {
+            productId: {
                 type: Number,
                 required: true
             }
@@ -36,8 +26,6 @@
         },
         data: () => ({
             products: [],
-            category: null,
-            count: 0,
             loading: true
         }),
         created () {
@@ -45,13 +33,9 @@
         },
         methods: {
             async getProducts () {
-                let {data} = await this.$axios.get(`/api/products/short_list?category=${this.categoryId}&ordering=-price`)
+                let {data} = await this.$axios.get(`/api/products/short_list?product=${this.productId}`)
                 this.products = data
-                await this.getCategory(data)
                 this.loading = false
-            },
-            async getCategory (res) {
-                if (res[0].hasOwnProperty('category_info')) this.category = res[0].category_info
             }
         }
     }

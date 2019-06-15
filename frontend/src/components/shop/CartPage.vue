@@ -132,7 +132,8 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="checkout('formDelivery')" v-loading="loading">Заказать</el-button>
+                        <el-button type="primary" @click="checkout('formDelivery')" v-loading="loading">Заказать
+                        </el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -141,7 +142,8 @@
                     <div class="uk-margin uk-padding">
                         <div class="uk-card uk-padding-large uk-text-center uk-card-default uk-box-shadow-large">
                             <h2>Ваш заказ оформлен!</h2>
-                            <div class="uk-text-large uk-margin">Ожидайте звонка оператора для потверждения заказа.</div>
+                            <div class="uk-text-large uk-margin">Ожидайте звонка оператора для потверждения заказа.
+                            </div>
                             <a href="/">
                                 <el-button type="primary">На главную</el-button>
                             </a>
@@ -173,7 +175,7 @@
             }
         }),
         created () {
-            this.getDestinations()
+            this.getDestinations();
             this.getCart()
         },
         mounted () {
@@ -212,17 +214,17 @@
                 this.active++
             },
             async checkout (form) {
-                this.loading = true
-                let dForm = this.$refs[form].model
+                this.loading = true;
+                let dForm = this.$refs[form].model;
                 let order = {
                     ...dForm,
                     items: this.items
                 }
                 await this.$axios.post('/api/orders/checkout', order)
                     .then(() => {
-                        this.active = 2
-                        this.resetCart()
-                        this.loading = false
+                        this.active = 2;
+                        this.resetCart();
+                        this.loading = false;
                         this.active++
                     })
                     .catch(e => console.dir(e))

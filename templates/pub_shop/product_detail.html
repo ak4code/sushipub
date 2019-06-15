@@ -6,6 +6,51 @@
 
 {% block content %}
     <article class="uk-container uk-container-large">
-        <h1>{{ product.name }}</h1>
+        <div class="uk-card uk-card-default uk-card-body pub-product-card uk-box-shadow-medium uk-margin">
+            <div class="uk-flex uk-flex-wrap uk-grid-small">
+                <div class="uk-width-2-3@m">
+                    <a href="{% url 'category-detail' product.category.slug %}" class="uk-button uk-button-primary">
+                        {{ product.category.name }}
+                    </a>
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="uk-align-center"
+                         style="max-width: 400px;">
+                </div>
+                <div class="uk-width-1-3@m">
+                    <h1>{{ product.name }}</h1>
+                    {% if product.ingredients.all %}
+                        <div class="ingredients uk-margin">
+                            <h5>Ингридиенты: </h5>
+                            {% for ig in product.ingredients.all %}
+                                <span class="uk-badge">{{ ig.name }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if product.text %}
+                        <h5>Описание: </h5>
+                        <div class="description uk-margin">
+                            {{ product.text }}
+                        </div>
+                    {% endif %}
+                    {% if product.content %}
+                        <div class="uk-padding-small uk-margin">
+                            {{ product.content|safe }}
+                        </div>
+                    {% endif %}
+                    <div class="uk-card uk-card-small uk-margin uk-card-body uk-border-rounded" style="background: #e2e2e2;">
+                        <div class="uk-text-muted">
+                            {{ product.size | default:"---" }} / {{ product.weight | default:"---" }} гр.
+                        </div>
+                        <div class="uk-text-lead">
+                            {{ product.price | stringformat:'d' }} руб.
+                        </div>
+                        <in-cart product-id="{{ product.id }}"></in-cart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uk-card uk-card-default uk-card-body uk-card-small uk-box-shadow-medium">
+            <h3>Добавьте к заказу</h3>
+            <product-short product-id="{{ product.id }}"></product-short>
+        </div>
     </article>
 {% endblock %}

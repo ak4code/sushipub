@@ -52,14 +52,12 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def short_list(self, request):
-        if 'category' in request.query_params:
-            category = request.query_params['category']
-            products = Product.objects.select_related('category').filter(category_id=category)
+        if 'product' in request.query_params:
+            product_id = request.query_params['product']
+            products = Product.objects.select_related('category').filter(is_adding=True).exclude(id=product_id)
             fs = self.filter_queryset(products)
-            serializer = self.get_serializer(fs[:4], many=True)
+            serializer = self.get_serializer(fs[:5], many=True)
             return Response(serializer.data)
-        else:
-            return Response(list())
 
 
 class CategoryDetail(DetailView):

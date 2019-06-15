@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
+
 from pub_main.views import PageDetail, HomePage, OrderView
 from pub_shop.views import CartPage
 from .api import router

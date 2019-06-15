@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Страница не найдена{% endblock %}
+
+{% block meta_description %}Страница не найдена{% endblock %}
+
+{% block content %}
+    <div class="page-404 uk-container uk-container-large">
+        <div class="uk-flex uk-flex-center uk-flex-wrap">
+            <div class="uk-width-1-1 uk-position-relative" style="min-height: 320px; max-width: 350px;">
+                <div style="position: absolute;top: 20px;left: 127px;font-size: 80px;color: #d33688;font-family: 'Arial';font-weight: bold;">
+                    4&nbsp&nbsp&nbsp4
+                </div>
+                <img src="{% static '404.png' %}" class="uk-align-center" alt="404"
+                     style="max-width: 300px; position:absolute; z-index: 2;">
+            </div>
+            <h2 class="uk-width-1-1 uk-margin-small uk-text-center">Страница не найдена.</h2>
+            <div class="uk-text-center" style="max-width: 450px;">
+                <p>
+                    Добро пожаловать на страницу <strong>404</strong>! Вы находитесь здесь, потому что ввели адрес
+                    страницы, которая уже
+                    не существует или была перемещена по другому адресу
+                </p>
+                <p>
+                    <a href="{% url 'home' %}" class="uk-text-lead" style="color: #d33688">Перейти на главную</a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

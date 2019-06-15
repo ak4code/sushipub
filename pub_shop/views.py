@@ -54,7 +54,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     def short_list(self, request):
         if 'product' in request.query_params:
             product_id = request.query_params['product']
-            products = Product.objects.select_related('category').filter(is_adding=True).exclude(id=product_id)
+            products = Product.objects.select_related('category').filter(is_adding=True).exclude(
+                id=product_id).order_by('?')
             fs = self.filter_queryset(products)
             serializer = self.get_serializer(fs[:5], many=True)
             return Response(serializer.data)

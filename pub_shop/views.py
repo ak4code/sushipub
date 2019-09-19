@@ -48,7 +48,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     pagination_class = ProductPagination
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter,)
     filterset_fields = ('category', 'price',)
-    ordering_fields = ('price',)
+    ordering_fields = ('price', 'name', 'id',)
 
     @action(detail=False)
     def short_list(self, request):

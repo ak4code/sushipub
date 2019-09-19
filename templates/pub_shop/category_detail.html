@@ -7,7 +7,7 @@
 {% block content %}
     <article class="uk-container uk-container-large">
         <h1 class="pub-title">{{ category.meta_title }}</h1>
-        <category-detail :category-id={{ category.id }}></category-detail>
+        <category-detail product-sort="{{ category.sort }}" :category-id={{ category.id }}></category-detail>
         <section class="content">
             <div class="uk-card uk-card-default uk-card-body">
                 {{ category.content|safe }}

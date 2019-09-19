@@ -40,6 +40,10 @@
             categoryId: {
                 type: Number,
                 required: true
+            },
+            productSort: {
+                type: String,
+                default: '-price'
             }
         },
         data: () => ({
@@ -58,7 +62,7 @@
         },
         methods: {
             async getProducts () {
-                let {data} = await this.$axios.get(`/api/products?category=${this.categoryId}&ordering=-price`)
+                let {data} = await this.$axios.get(`/api/products?category=${this.categoryId}&ordering=${this.productSort}`)
                 this.products = data
                 await this.getCategory(data.results)
                 this.loading = false

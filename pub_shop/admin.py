@@ -26,7 +26,7 @@ class CategoryAdmin(ImportExportModelAdmin):
     fieldsets = (
         ('Основное', {
             'classes': ('extrapretty',),
-            'fields': ('name', 'content', 'image',)
+            'fields': ('name', 'content', 'image', 'sort',)
         }),
         ('SEO', {
             'fields': ('meta_title', 'meta_description',)

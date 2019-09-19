@@ -16,10 +16,19 @@ class AbstractShop(models.Model):
 
 
 class Category(AbstractShop):
+    PRODUCT_SORT_CHOICES = (
+        ('-price', 'Цена (по убыванию)'),
+        ('price', 'Цена (по возростанию)'),
+        ('-name', 'Назвние (по убыванию)'),
+        ('name', 'Назвние (по возростанию)'),
+        ('id', 'ИД (по возростанию)'),
+        ('-id', 'ИД (по убыванию)'),
+    )
     name = models.CharField(max_length=255, verbose_name='Название')
     content = HTMLField(blank=True, null=True, verbose_name='Контент')
     image = models.ImageField(upload_to='shop/categories', blank=True, null=True, verbose_name='Изображение')
     slug = models.SlugField(blank=True, null=True, verbose_name='Ссылка')
+    sort = models.CharField(max_length=100, choices=PRODUCT_SORT_CHOICES, default='-price', verbose_name='Сортировка товаров')
 
     def __str__(self):
         return self.name
